@@ -1,0 +1,158 @@
+{
+  "name": "John Smith",
+  "id": "person-1",
+  "gender": "M",
+  "birth": "1920-03-15",
+  "death": "1995-08-22",
+  "photo": null,
+  "spouse": {
+    "name": "Mary Johnson",
+    "id": "person-2",
+    "gender": "F",
+    "birth": "1922-07-10",
+    "death": "2010-12-05",
+    "photo": null
+  },
+  "children": [
+    {
+      "name": "Robert Smith",
+      "id": "person-3",
+      "gender": "M",
+      "birth": "1945-05-20",
+      "death": null,
+      "photo": null,
+      "spouse": {
+        "name": "Patricia Davis",
+        "id": "person-4",
+        "gender": "F",
+        "birth": "1947-09-15",
+        "death": null,
+        "photo": null
+      },
+      "children": [
+        {
+          "name": "Michael Smith",
+          "id": "person-7",
+          "gender": "M",
+          "birth": "1970-02-12",
+          "death": null,
+          "photo": null,
+          "spouse": {
+            "name": "Jennifer Wilson",
+            "id": "person-8",
+            "gender": "F",
+            "birth": "1972-11-30",
+            "death": null,
+            "photo": null
+          },
+          "children": [
+            {
+              "name": "Emily Smith",
+              "id": "person-13",
+              "gender": "F",
+              "birth": "1995-06-18",
+              "death": null,
+              "photo": null,
+              "spouse": null,
+              "children": []
+            },
+            {
+              "name": "Daniel Smith",
+              "id": "person-14",
+              "gender": "M",
+              "birth": "1998-09-22",
+              "death": null,
+              "photo": null,
+              "spouse": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "Sarah Smith",
+          "id": "person-9",
+          "gender": "F",
+          "birth": "1973-08-05",
+          "death": null,
+          "photo": null,
+          "spouse": {
+            "name": "David Martinez",
+            "id": "person-10",
+            "gender": "M",
+            "birth": "1971-04-18",
+            "death": null,
+            "photo": null
+          },
+          "children": [
+            {
+              "name": "Sophia Martinez",
+              "id": "person-15",
+              "gender": "F",
+              "birth": "1997-03-11",
+              "death": null,
+              "photo": null,
+              "spouse": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Linda Smith",
+      "id": "person-5",
+      "gender": "F",
+      "birth": "1948-11-08",
+      "death": null,
+      "photo": null,
+      "spouse": {
+        "name": "James Brown",
+        "id": "person-6",
+        "gender": "M",
+        "birth": "1946-06-25",
+        "death": "2018-01-15",
+        "photo": null
+      },
+      "children": [
+        {
+          "name": "Christopher Brown",
+          "id": "person-11",
+          "gender": "M",
+          "birth": "1975-12-03",
+          "death": null,
+          "photo": null,
+          "spouse": {
+            "name": "Amanda Taylor",
+            "id": "person-12",
+            "gender": "F",
+            "birth": "1977-07-20",
+            "death": null,
+            "photo": null
+          },
+          "children": [
+            {
+              "name": "Olivia Brown",
+              "id": "person-16",
+              "gender": "F",
+              "birth": "2000-05-14",
+              "death": null,
+              "photo": null,
+              "spouse": null,
+              "children": []
+            },
+            {
+              "name": "Ethan Brown",
+              "id": "person-17",
+              "gender": "M",
+              "birth": "2003-10-28",
+              "death": null,
+              "photo": null,
+              "spouse": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

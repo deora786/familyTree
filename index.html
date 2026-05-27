@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Family Tree Visualization</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">
+                <i class="fas fa-tree"></i>
+                Family Tree
+            </h1>
+            <div class="header-controls">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input
+                        type="text"
+                        id="search-input"
+                        class="search-input"
+                        placeholder="Search for a family member..."
+                        aria-label="Search family members"
+                    >
+                    <button id="clear-search" class="clear-search-btn" aria-label="Clear search" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <button id="filter-toggle" class="filter-toggle-btn" aria-label="Toggle filters">
+                    <i class="fas fa-filter"></i>
+                    <span class="filter-toggle-text">Filters</span>
+                </button>
+                <button id="reset-view" class="icon-btn" title="Reset View" aria-label="Reset view">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button id="zoom-in" class="icon-btn" title="Zoom In" aria-label="Zoom in">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button id="zoom-out" class="icon-btn" title="Zoom Out" aria-label="Zoom out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button id="expand-all" class="icon-btn" title="Expand All" aria-label="Expand all branches">
+                    <i class="fas fa-expand-alt"></i>
+                </button>
+                <button id="collapse-all" class="icon-btn" title="Collapse All" aria-label="Collapse all branches">
+                    <i class="fas fa-compress-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;">
+            <span class="result-count"></span>
+            <div class="result-navigation">
+                <button id="prev-result" class="nav-btn" aria-label="Previous result">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+                <button id="next-result" class="nav-btn" aria-label="Next result">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Sidebar -->
+    <aside id="filters-sidebar" class="filters-sidebar">
+        <div class="filters-header">
+            <h2 class="filters-title">Filters</h2>
+            <button id="close-filters" class="close-filters-btn" aria-label="Close filters">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="filters-content">
+            <!-- Generation Filter -->
+            <div class="filter-section">
+                <h3 class="filter-heading">
+                    <i class="fas fa-layer-group"></i>
+                    Generations
+                </h3>
+                <div class="filter-body">
+                    <label for="generation-start">From:</label>
+                    <input type="number" id="generation-start" min="1" max="10" value="1">
+                    <label for="generation-end">To:</label>
+                    <input type="number" id="generation-end" min="1" max="10" value="10">
+                </div>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="filter-section">
+                <h3 class="filter-heading">
+                    <i class="fas fa-user-check"></i>
+                    Status
+                </h3>
+                <div class="filter-body">
+                    <label class="filter-checkbox">
+                        <input type="radio" name="status" value="all" checked>
+                        <span>Show all</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="radio" name="status" value="living">
+                        <span>Living only</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="radio" name="status" value="deceased">
+                        <span>Deceased only</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Photo Filter -->
+            <div class="filter-section">
+                <h3 class="filter-heading">
+                    <i class="fas fa-image"></i>
+                    Photos
+                </h3>
+                <div class="filter-body">
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="photos-only">
+                        <span>Only show members with photos</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Active Filters -->
+            <div id="active-filters" class="active-filters" style="display: none;">
+                <h3 class="filter-heading">Active Filters</h3>
+                <div id="filter-chips" class="filter-chips"></div>
+            </div>
+
+            <!-- Filter Actions -->
+            <div class="filter-actions">
+                <button id="clear-filters" class="btn btn-secondary">
+                    <i class="fas fa-eraser"></i>
+                    Clear All Filters
+                </button>
+            </div>
+
+            <!-- Filter Stats -->
+            <div id="filter-stats" class="filter-stats">
+                Showing <strong id="visible-count">0</strong> of <strong id="total-count">0</strong> members
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Tree Container -->
+    <main class="main-container">
+        <div id="tree-container" class="tree-container">
+            <svg id="family-tree" class="family-tree-svg"></svg>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading family tree...</p>
+        </div>
+    </main>
+
+    <!-- Info Panel -->
+    <section id="info-panel" class="info-panel">
+        <div class="info-panel-header">
+            <h2 id="panel-name" class="panel-name"></h2>
+            <button id="close-panel" class="close-panel-btn" aria-label="Close panel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="info-panel-content">
+            <div class="person-photo-large">
+                <img id="panel-photo" src="" alt="" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%22100%22 fill=%22%234A90E2%22/%3E%3Ctext x=%22100%22 y=%22120%22 font-size=%2280%22 fill=%22white%22 text-anchor=%22middle%22 font-family=%22Poppins%22%3E?%3C/text%3E%3C/svg%3E'">
+            </div>
+
+            <div class="person-details">
+                <div class="detail-row">
+                    <i class="fas fa-calendar-alt detail-icon"></i>
+                    <div class="detail-content">
+                        <strong>Born:</strong>
+                        <span id="panel-birth"></span>
+                    </div>
+                </div>
+                <div class="detail-row" id="death-row" style="display: none;">
+                    <i class="fas fa-cross detail-icon"></i>
+                    <div class="detail-content">
+                        <strong>Died:</strong>
+                        <span id="panel-death"></span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <i class="fas fa-layer-group detail-icon"></i>
+                    <div class="detail-content">
+                        <strong>Generation:</strong>
+                        <span id="panel-generation"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-relationships">
+                <div id="spouse-section" class="relationship-section" style="display: none;">
+                    <h3 class="relationship-heading">
+                        <i class="fas fa-heart"></i>
+                        Spouse
+                    </h3>
+                    <ul id="spouse-list" class="relationship-list"></ul>
+                </div>
+
+                <div id="children-section" class="relationship-section" style="display: none;">
+                    <h3 class="relationship-heading">
+                        <i class="fas fa-baby"></i>
+                        Children
+                    </h3>
+                    <ul id="children-list" class="relationship-list"></ul>
+                </div>
+
+                <div id="parents-section" class="relationship-section" style="display: none;">
+                    <h3 class="relationship-heading">
+                        <i class="fas fa-users"></i>
+                        Parents
+                    </h3>
+                    <ul id="parents-list" class="relationship-list"></ul>
+                </div>
+            </div>
+
+            <div class="panel-actions">
+                <button id="center-person" class="btn btn-primary">
+                    <i class="fas fa-crosshairs"></i>
+                    View in Tree
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overlay for mobile filters/panel -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Scripts -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/family-tree.js"></script>
+</body>
+</html>
