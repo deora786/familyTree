@@ -216,6 +216,15 @@ input:focus {
   gap: var(--spacing-lg);
 }
 
+/* Family Crest */
+.family-crest {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  margin-right: var(--spacing-md);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
 .header-title {
   font-family: var(--font-display);
   font-size: 2.2rem; /* Slightly smaller, more elegant */
@@ -1288,6 +1297,32 @@ input:focus {
   font-style: italic;
   color: var(--text-secondary);
   font-weight: 400;
+}
+
+/* Notes Section */
+.notes-section {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
+  background: rgba(201, 169, 97, 0.05);
+  border-left: 3px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+}
+
+.notes-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--primary);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: var(--tracking-wide);
+}
+
+.notes-content {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  white-space: pre-wrap; /* Preserve line breaks */
 }
 
 .person-relationships {

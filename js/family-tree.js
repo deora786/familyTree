@@ -702,6 +702,17 @@ function showPersonInfo(person) {
   // Generation
   document.getElementById('panel-generation').textContent = `Generation ${person.generation || '?'}`;
 
+  // Notes section
+  const notesSection = document.getElementById('notes-section');
+  const notesContent = document.getElementById('panel-notes');
+
+  if (person.notes && person.notes.trim() !== '') {
+    notesSection.style.display = 'block';
+    notesContent.textContent = person.notes;
+  } else {
+    notesSection.style.display = 'none';
+  }
+
   // Spouse
   const spouseSection = document.getElementById('spouse-section');
   const spouseList = document.getElementById('spouse-list');
