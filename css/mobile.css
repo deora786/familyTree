@@ -12,11 +12,20 @@
   .header-content {
     flex-direction: column;
     gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  /* Family Crest - Smaller on mobile */
+  .family-crest {
+    height: 40px;
+    margin-right: 0;
+    margin-bottom: var(--spacing-xs);
   }
 
   .header-title {
-    font-size: var(--text-2xl);
-    letter-spacing: var(--tracking-wide);
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    text-align: center;
   }
 
   .header-controls {
@@ -45,34 +54,53 @@
     max-width: 400px;
   }
 
-  /* Main Container */
+  /* Main Container - Adjusted for new header height */
   .main-container {
-    margin-top: 140px;
-    padding: var(--spacing-md);
+    margin-top: 120px;
+    padding: var(--spacing-sm);
   }
 
   .tree-container {
-    height: calc(100vh - 180px);
+    height: calc(100vh - 140px);
+  }
+
+  /* Backdrop crest - Smaller on mobile */
+  .tree-container::before {
+    width: 400px;
+    height: 400px;
+    opacity: 0.05; /* Even more subtle on mobile */
+  }
+
+  /* Corner ornaments - Hide on mobile to reduce clutter */
+  .main-container::before,
+  .main-container::after {
+    display: none;
   }
 
   /* Tree Nodes - Smaller for mobile */
   .node-card {
-    padding: 10px;
+    padding: 8px 8px 10px 8px;
   }
 
   .node-photo {
     width: 60px;
     height: 60px;
-    border-width: 4px;
+    border-width: 2px;
+  }
+
+  /* Frame overlay - Adjust for smaller photos */
+  .node-frame {
+    width: 70px;
+    height: 70px;
   }
 
   .node-name {
-    font-size: var(--text-base);
+    font-size: 0.85rem;
     max-width: 80px;
   }
 
   .node-dates {
-    font-size: var(--text-xs);
+    font-size: 0.7rem;
   }
 
   /* Info Panel - Full screen on mobile */
@@ -100,6 +128,21 @@
     font-size: var(--text-xl);
   }
 
+  /* Notes section - Mobile friendly */
+  .notes-section {
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+  }
+
+  .notes-heading {
+    font-size: 1rem;
+  }
+
+  .notes-content {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
   /* Larger tap targets for mobile */
   .btn {
     min-height: 44px;
@@ -124,10 +167,26 @@
 
 /* Mobile (600px and below) */
 @media (max-width: 600px) {
+  /* Family Crest - Even smaller on small phones */
+  .family-crest {
+    height: 35px;
+  }
+
+  .header-title {
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+  }
+
   /* Even smaller nodes for small screens */
   .node-photo {
     width: 50px;
     height: 50px;
+  }
+
+  /* Frame overlay - Smaller for phones */
+  .node-frame {
+    width: 60px;
+    height: 60px;
   }
 
   .node-name {
@@ -137,6 +196,13 @@
 
   .node-dates {
     font-size: 0.65rem;
+  }
+
+  /* Backdrop crest - Even more subtle on small phones */
+  .tree-container::before {
+    width: 300px;
+    height: 300px;
+    opacity: 0.04;
   }
 
   /* Stack filter inputs vertically */
