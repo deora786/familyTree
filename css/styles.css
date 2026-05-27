@@ -35,7 +35,7 @@
   --shadow-xs: 0 1px 2px rgba(30, 58, 95, 0.08);
   --shadow-sm: 0 2px 4px rgba(30, 58, 95, 0.10), 0 1px 2px rgba(30, 58, 95, 0.06);
   --shadow-md: 0 4px 6px rgba(30, 58, 95, 0.12), 0 2px 4px rgba(30, 58, 95, 0.08);
-  --shadow-lg: 0 10px 15px rgba(30, 58, 95, 0.15), 0 4px 6px rgba(30, 58, 95, 0.10);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
   --shadow-xl: 0 20px 25px rgba(30, 58, 95, 0.18), 0 10px 10px rgba(30, 58, 95, 0.08);
   --shadow-warm: 0 8px 16px rgba(92, 58, 49, 0.12);
   --shadow-gold: 0 4px 12px rgba(201, 169, 97, 0.25);
@@ -117,18 +117,20 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
 
-  /* Multi-layer parchment texture background */
+  /* Multi-layer parchment texture background with premium depth */
   background:
     /* Layer 1: Subtle noise pattern via SVG data URI */
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(%23noise)" opacity="0.03"/></svg>'),
-    /* Layer 2: Radial vignette for edge darkening */
+    /* Layer 2: Radial highlight at top-left for depth */
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 40%),
+    /* Layer 3: Radial vignette for edge darkening */
     radial-gradient(ellipse at center, transparent 0%, rgba(30, 58, 95, 0.05) 100%),
-    /* Layer 3: Base parchment gradient */
-    linear-gradient(135deg, #E8DFD0 0%, #F0E8D8 25%, #EBE4D6 50%, #F0E8D8 75%, #E8DFD0 100%);
+    /* Layer 4: Base parchment gradient (simplified for elegance) */
+    linear-gradient(180deg, #F4EFE7 0%, #E8DED1 100%);
 
   background-attachment: fixed;
-  background-size: 200px 200px, cover, cover;
-  background-repeat: repeat, no-repeat, no-repeat;
+  background-size: 200px 200px, cover, cover, cover;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -731,13 +733,12 @@ input:focus {
 }
 
 .tree-node:hover .node-card {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow:
-    0 2px 4px rgba(30, 58, 95, 0.10),
-    0 12px 24px rgba(30, 58, 95, 0.25),
-    0 0 20px rgba(201, 169, 97, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 1);
-  border-color: var(--accent-gold);
+  transform: translateY(-4px) scale(1.02);
+  filter: drop-shadow(0 2px 4px rgba(30, 58, 95, 0.10))
+          drop-shadow(0 12px 40px rgba(0, 0, 0, 0.15))
+          drop-shadow(0 0 20px rgba(201, 169, 97, 0.2));
+  stroke: var(--accent-gold);
+  stroke-width: 2.5;
 }
 
 .tree-node:hover .node-card::before {
@@ -754,16 +755,21 @@ input:focus {
 
 .tree-node:hover .node-photo {
   transform: scale(1.05);
-  border-width: 6px;
+  border-width: 4px;
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.20),
-    inset 0 2px 4px rgba(0, 0, 0, 0.15),
-    0 0 0 2px rgba(201, 169, 97, 0.5),
-    0 0 20px rgba(201, 169, 97, 0.3);
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.10),
+    0 0 12px rgba(200, 169, 107, 0.3);
 }
 
 .node-card {
+  /* SVG elements use fill, not background */
+  fill: var(--card-bg);
   background: var(--card-bg);
+
+  stroke: var(--border-elegant);
+  stroke-width: 2;
+
   border-radius: var(--radius-lg);
   padding: 14px;
   position: relative;
@@ -774,14 +780,14 @@ input:focus {
     0 4px 12px rgba(30, 58, 95, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
-  /* Aged gold border */
-  border: 2px solid var(--border-elegant);
+  /* Premium filter for depth */
+  filter: drop-shadow(0 1px 2px rgba(30, 58, 95, 0.08)) drop-shadow(0 4px 12px rgba(30, 58, 95, 0.15));
 
   /* Smooth premium transitions */
   transition:
     transform var(--transition-base),
-    box-shadow var(--transition-base),
-    border-color var(--transition-base);
+    filter var(--transition-base),
+    stroke var(--transition-base);
 }
 
 /* Inner border for double-frame effect */
@@ -815,12 +821,11 @@ input:focus {
 
 /* Male: Subtle cool undertone with royal blue accent */
 .node-card.male {
-  background: linear-gradient(135deg, #FAFAF8 0%, #F9F6F0 100%);
-  border-color: var(--primary-light);
-  box-shadow:
-    0 1px 2px rgba(42, 80, 128, 0.12),
-    0 4px 12px rgba(42, 80, 128, 0.20),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  fill: #FFFDF8;
+  background: linear-gradient(145deg, #FFFDF8 0%, #F5EFE6 100%);
+  stroke: var(--primary-light);
+  stroke-width: 2;
+  filter: drop-shadow(0 1px 2px rgba(42, 80, 128, 0.12)) drop-shadow(0 8px 30px rgba(42, 80, 128, 0.12));
 }
 
 .node-card.male::before {
@@ -829,12 +834,11 @@ input:focus {
 
 /* Female: Subtle warm undertone with mahogany accent */
 .node-card.female {
-  background: linear-gradient(135deg, #FAF8F6 0%, #F9F6F0 100%);
-  border-color: var(--accent-mahogany-light);
-  box-shadow:
-    0 1px 2px rgba(125, 84, 70, 0.12),
-    0 4px 12px rgba(125, 84, 70, 0.20),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  fill: #FAF8F6;
+  background: linear-gradient(145deg, #FFFDF8 0%, #F5EFE6 100%);
+  stroke: var(--accent-mahogany-light);
+  stroke-width: 2;
+  filter: drop-shadow(0 1px 2px rgba(125, 84, 70, 0.12)) drop-shadow(0 8px 30px rgba(125, 84, 70, 0.12));
 }
 
 .node-card.female::before {
@@ -844,12 +848,13 @@ input:focus {
 /* Deceased: Double border + sepia overlay */
 .node-card.deceased {
   opacity: 0.88;
-  border-style: double;
-  border-width: 3px;
+  stroke-width: 3;
+  stroke-dasharray: 4, 2;
+  fill: #F3EDE3;
   background: linear-gradient(135deg,
     rgba(243, 237, 227, 0.95) 0%,
     rgba(249, 246, 240, 0.95) 100%);
-  filter: sepia(0.15);
+  filter: sepia(0.15) drop-shadow(0 4px 12px rgba(30, 58, 95, 0.10));
 }
 
 .node-card.deceased::before {
@@ -863,12 +868,11 @@ input:focus {
   object-fit: cover;
   margin-bottom: var(--spacing-sm);
 
-  /* Thick aged gold border with depth */
-  border: 5px solid var(--accent-gold);
+  /* Premium gold ring with soft shadow */
+  border: 3px solid #C8A96B;
   box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.15),
-    inset 0 2px 4px rgba(0, 0, 0, 0.10),
-    0 0 0 1px rgba(201, 169, 97, 0.3);
+    0 3px 10px rgba(0, 0, 0, 0.12),
+    inset 0 1px 2px rgba(0, 0, 0, 0.08);
 
   background: white;
   transition:
@@ -910,8 +914,8 @@ input:focus {
 /* Highlighted Node */
 .tree-node.highlighted .node-card {
   animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  border-color: var(--accent-gold);
-  border-width: 4px;
+  stroke: var(--accent-gold);
+  stroke-width: 4;
 }
 
 .tree-node.highlighted .node-card::after {
@@ -942,11 +946,11 @@ input:focus {
 .tree-link {
   fill: none;
   stroke: var(--primary);
-  stroke-width: 2px;
-  stroke-opacity: 0.6;
+  stroke-width: 2.5px;
+  stroke-opacity: 0.35;
 
-  /* Subtle glow effect */
-  filter: drop-shadow(0 1px 2px rgba(30, 58, 95, 0.3));
+  /* Subtle glow effect for engraved lineage feel */
+  filter: drop-shadow(0 1px 2px rgba(30, 58, 95, 0.25));
 
   transition:
     stroke-opacity var(--transition-base),
@@ -955,20 +959,20 @@ input:focus {
 }
 
 .tree-link:hover {
-  stroke-opacity: 0.9;
+  stroke-opacity: 0.65;
   stroke-width: 3px;
-  filter: drop-shadow(0 2px 4px rgba(30, 58, 95, 0.5));
+  filter: drop-shadow(0 2px 4px rgba(30, 58, 95, 0.4));
 }
 
-/* Spouse links with gold glow */
+/* Spouse links with elegant gold styling */
 .tree-link.spouse-link {
   stroke: var(--accent-gold);
-  stroke-width: 2.5px;
+  stroke-width: 3px;
   stroke-opacity: 0.8;
-  stroke-dasharray: 10, 5;
+  stroke-dasharray: 6, 4;
 
-  /* Gold glow */
-  filter: drop-shadow(0 1px 3px rgba(201, 169, 97, 0.4));
+  /* Elegant gold glow for premium feel */
+  filter: drop-shadow(0 0 2px rgba(200, 169, 107, 0.4));
 
   transition:
     stroke-opacity var(--transition-base),
@@ -978,8 +982,8 @@ input:focus {
 
 .tree-link.spouse-link:hover {
   stroke-opacity: 1;
-  stroke-width: 3px;
-  filter: drop-shadow(0 2px 6px rgba(201, 169, 97, 0.6));
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 0 4px rgba(200, 169, 107, 0.6));
 }
 
 /* Loading State */
@@ -1261,7 +1265,7 @@ input:focus {
 @keyframes nodeAppear {
   from {
     opacity: 0;
-    transform: scale(0.85) translateY(10px);
+    transform: scale(0.92) translateY(8px);
   }
   to {
     opacity: 1;
@@ -1270,20 +1274,18 @@ input:focus {
 }
 
 .tree-node {
-  animation: nodeAppear 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: nodeAppear 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Pulse animation with gold glow */
+/* Pulse animation with gold glow for SVG */
 @keyframes pulse {
   0%, 100% {
-    box-shadow:
-      0 0 0 0 rgba(201, 169, 97, 0.7),
-      var(--shadow-md);
+    filter: drop-shadow(0 0 0 rgba(201, 169, 97, 0.7))
+            drop-shadow(0 4px 12px rgba(30, 58, 95, 0.15));
   }
   50% {
-    box-shadow:
-      0 0 0 15px rgba(201, 169, 97, 0),
-      var(--shadow-lg);
+    filter: drop-shadow(0 0 15px rgba(201, 169, 97, 0.4))
+            drop-shadow(0 8px 30px rgba(0, 0, 0, 0.12));
   }
 }
 
