@@ -11,13 +11,13 @@ let searchResults = [];
 let currentSearchIndex = 0;
 let collapsedNodes = new Set();
 
-// Configuration
+// Configuration - MANUSCRIPT: Organic spacing for natural flow
 const config = {
-  nodeWidth: 120,
-  nodeHeight: 140,
-  verticalSpacing: 180,
-  horizontalSpacing: 60,
-  spouseSpacing: 150,
+  nodeWidth: 130, // Slightly wider for larger photos
+  nodeHeight: 150, // Taller for portrait composition
+  verticalSpacing: 220, // Increased from 180 for breathing room
+  horizontalSpacing: 80, // Increased from 60 for less rigid grid
+  spouseSpacing: 180, // Increased from 150 for elegant separation
   transitionDuration: 500
 };
 
