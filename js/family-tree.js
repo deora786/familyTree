@@ -18,7 +18,18 @@ const config = {
   verticalSpacing: 220, // Increased from 180 for breathing room
   horizontalSpacing: 80, // Increased from 60 for less rigid grid
   spouseSpacing: 180, // Increased from 150 for elegant separation
-  transitionDuration: 500
+  transitionDuration: 500,
+
+  // Frame and default image paths
+  frames: {
+    saint: 'images/frames/saint-frame.png',      // Ornate frame for root/saints
+    male: 'images/frames/male-frame.png',        // Royal frame for males
+    female: 'images/frames/female-frame.png'     // Royal frame for females
+  },
+  defaults: {
+    male: 'images/defaults/male-default.png',    // Default male portrait
+    female: 'images/defaults/female-default.png' // Default female portrait
+  }
 };
 
 // Initialize the application
@@ -510,15 +521,34 @@ function renderNodes(positions) {
     }
   });
 
-  // Add photo or placeholder
+  // Add photo or default portrait
   nodeGroups.append('image')
     .attr('class', d => d.node.death ? 'node-photo deceased' : 'node-photo')
-    .attr('x', -40)
-    .attr('y', -60)
-    .attr('width', 80)
-    .attr('height', 80)
-    .attr('href', d => d.node.photo || getPlaceholderImage(d.node.name, d.node.gender))
-    .attr('clip-path', 'circle(40px at 40px 40px)');
+    .attr('x', -45) // Adjusted for 90px size
+    .attr('y', -65)
+    .attr('width', 90)
+    .attr('height', 90)
+    .attr('href', d => getPhotoOrDefault(d.node))
+    .attr('clip-path', 'circle(45px at 45px 45px)')
+    .on('error', function(event, d) {
+      // Fallback to gradient placeholder if default image fails
+      d3.select(this).attr('href', getPlaceholderImage(d.node.name, d.node.gender));
+    });
+
+  // Add ornate frame overlay (for root person or saints)
+  nodeGroups.append('image')
+    .attr('class', 'node-frame')
+    .attr('x', -50)
+    .attr('y', -70)
+    .attr('width', 100)
+    .attr('height', 100)
+    .attr('href', d => getFrameImage(d))
+    .style('pointer-events', 'none') // Frame doesn't intercept clicks
+    .style('opacity', 0.95)
+    .on('error', function() {
+      // Hide frame if image doesn't exist
+      d3.select(this).style('display', 'none');
+    });
 
   // Add name
   nodeGroups.append('text')
@@ -617,6 +647,34 @@ function getPlaceholderImage(name, gender) {
   return 'data:image/svg+xml;base64,' + btoa(svg);
 }
 
+// Get photo or default portrait based on gender
+function getPhotoOrDefault(node) {
+  if (node.photo) {
+    return node.photo;
+  }
+  // Use default portraits for male/female, fallback to placeholder
+  const defaultPath = node.gender === 'M' ? config.defaults.male : config.defaults.female;
+
+  // Return default if exists, otherwise use gradient placeholder
+  return defaultPath;
+  // Note: If default images don't exist, browser will show broken image
+  // To prevent this, add onerror handler in rendering code
+}
+
+// Get appropriate frame based on person's status
+function getFrameImage(d) {
+  // Check if this is the root person (generation 1, no parent)
+  const isRoot = d.node.generation === 1 && !d.node.parentId;
+
+  if (isRoot) {
+    // Root person gets ornate saint frame
+    return config.frames.saint;
+  }
+
+  // Regular frames based on gender
+  return d.node.gender === 'M' ? config.frames.male : config.frames.female;
+}
+
 // Show person information panel
 function showPersonInfo(person) {
   currentPerson = person;
@@ -626,7 +684,7 @@ function showPersonInfo(person) {
 
   // Update panel content
   document.getElementById('panel-name').textContent = person.name;
-  document.getElementById('panel-photo').src = person.photo || getPlaceholderImage(person.name, person.gender);
+  document.getElementById('panel-photo').src = getPhotoOrDefault(person);
   document.getElementById('panel-photo').alt = person.name;
 
   // Birth date
