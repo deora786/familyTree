@@ -216,6 +216,17 @@ input:focus {
   gap: var(--spacing-lg);
 }
 
+/* Family Crest */
+.family-crest {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  margin-right: var(--spacing-md);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  background: transparent;
+  mix-blend-mode: normal;
+}
+
 .header-title {
   font-family: var(--font-display);
   font-size: 2.2rem; /* Slightly smaller, more elegant */
@@ -759,21 +770,23 @@ input:focus {
   position: relative;
 }
 
-/* MANUSCRIPT: Family initial watermark in center */
+/* MANUSCRIPT: Deora family crest watermark in center */
 .tree-container::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="85" fill="none" stroke="%23C9A961" stroke-width="0.3" opacity="0.08"/><text x="100" y="125" font-family="serif" font-size="100" font-weight="300" fill="%23C9A961" opacity="0.04" text-anchor="middle" letter-spacing="0.05em">F</text></svg>');
+  width: 600px;
+  height: 600px;
+  background-image: url('../images/crest/deora-crest-transparent.png');
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.6;
+  background-position: center;
+  opacity: 0.08; /* Very subtle, faded backdrop */
   pointer-events: none;
   z-index: 0;
+  filter: grayscale(20%) brightness(1.1); /* Subtle desaturation for background */
 }
 
 /* MANUSCRIPT: Vignette overlay for depth */
@@ -1288,6 +1301,32 @@ input:focus {
   font-style: italic;
   color: var(--text-secondary);
   font-weight: 400;
+}
+
+/* Notes Section */
+.notes-section {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
+  background: rgba(201, 169, 97, 0.05);
+  border-left: 3px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+}
+
+.notes-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--primary);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: var(--tracking-wide);
+}
+
+.notes-content {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  white-space: pre-wrap; /* Preserve line breaks */
 }
 
 .person-relationships {

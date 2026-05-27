@@ -663,11 +663,11 @@ function getPhotoOrDefault(node) {
 
 // Get appropriate frame based on person's status
 function getFrameImage(d) {
-  // Check if this is the root person (generation 1, no parent)
-  const isRoot = d.node.generation === 1 && !d.node.parentId;
+  // Check if this person is marked as a saint
+  const isSaint = d.node.role === 'saint';
 
-  if (isRoot) {
-    // Root person gets ornate saint frame
+  if (isSaint) {
+    // Saints get ornate saint frame (Nath Ji Maharaj frame)
     return config.frames.saint;
   }
 
@@ -701,6 +701,17 @@ function showPersonInfo(person) {
 
   // Generation
   document.getElementById('panel-generation').textContent = `Generation ${person.generation || '?'}`;
+
+  // Notes section
+  const notesSection = document.getElementById('notes-section');
+  const notesContent = document.getElementById('panel-notes');
+
+  if (person.notes && person.notes.trim() !== '') {
+    notesSection.style.display = 'block';
+    notesContent.textContent = person.notes;
+  } else {
+    notesSection.style.display = 'none';
+  }
 
   // Spouse
   const spouseSection = document.getElementById('spouse-section');
