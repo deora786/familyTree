@@ -174,12 +174,12 @@ input:focus {
    Header
    =================================== */
 .header {
-  position: fixed;
+  position: fixed; /* Keep header fixed at top */
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-header);
-  padding: var(--spacing-lg) var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl); /* Reduced vertical padding */
 
   /* MANUSCRIPT: Parchment continuation, not dark app header */
   background: linear-gradient(to bottom,
@@ -189,7 +189,6 @@ input:focus {
   /* Remove solid border - add elegant separator line via ::after */
   border-bottom: none;
   box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
-  position: relative;
 }
 
 /* Elegant separator line */
@@ -694,9 +693,9 @@ input:focus {
    Main Container & Tree
    =================================== */
 .main-container {
-  margin-top: 80px;
-  padding: var(--spacing-lg);
-  min-height: calc(100vh - 80px);
+  margin-top: 60px; /* Reduced gap below fixed header */
+  padding: var(--spacing-sm) var(--spacing-lg); /* Reduced top padding */
+  min-height: calc(100vh - 60px);
   position: relative;
 }
 
@@ -716,19 +715,19 @@ input:focus {
 }
 
 .main-container::before {
-  top: 90px; /* Below header */
+  top: 70px; /* Adjusted for reduced header height */
   left: 30px;
 }
 
 .main-container::after {
-  top: 90px;
+  top: 70px; /* Adjusted for reduced header height */
   right: 30px;
   transform: scaleX(-1); /* Mirror horizontally */
 }
 
 .tree-container {
   width: 100%;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 80px); /* Reduced to maximize viewport usage */
 
   /* Lighter parchment with fine grain texture */
   background:
@@ -931,9 +930,9 @@ input:focus {
 }
 
 .node-photo {
-  /* MANUSCRIPT: Larger, portrait-dominant */
-  width: 90px;
-  height: 90px;
+  /* MANUSCRIPT: Sized to fit within ornate frames */
+  width: 80px; /* Smaller to fit within 100px ornate frames */
+  height: 80px;
   border-radius: var(--radius-full);
   object-fit: cover;
   margin-bottom: var(--spacing-sm);

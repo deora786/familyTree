@@ -524,12 +524,12 @@ function renderNodes(positions) {
   // Add photo or default portrait
   nodeGroups.append('image')
     .attr('class', d => d.node.death ? 'node-photo deceased' : 'node-photo')
-    .attr('x', -45) // Adjusted for 90px size
-    .attr('y', -65)
-    .attr('width', 90)
-    .attr('height', 90)
+    .attr('x', -40) // Centered within frame
+    .attr('y', -60)
+    .attr('width', 80) // Slightly smaller to fit within ornate frames
+    .attr('height', 80)
     .attr('href', d => getPhotoOrDefault(d.node))
-    .attr('clip-path', 'circle(45px at 45px 45px)')
+    .attr('clip-path', 'circle(40px at 40px 40px)')
     .on('error', function(event, d) {
       // Fallback to gradient placeholder if default image fails
       d3.select(this).attr('href', getPlaceholderImage(d.node.name, d.node.gender));
