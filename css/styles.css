@@ -48,12 +48,12 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
 
-  /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 50%;
+  /* Border Radius - Manuscript Sharp Corners */
+  --radius-sm: 0px;     /* Sharp edges for archival feel */
+  --radius-md: 1px;     /* Minimal softening */
+  --radius-lg: 2px;     /* Portrait frame corners */
+  --radius-xl: 2px;     /* Max rounding for manuscript */
+  --radius-full: 50%;   /* Circular photos unchanged */
 
   /* Premium Transitions with Cubic Bezier */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -174,24 +174,37 @@ input:focus {
    Header
    =================================== */
 .header {
-  position: fixed;
+  position: fixed; /* Keep header fixed at top */
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-header);
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl); /* Reduced vertical padding */
 
-  /* Deep royal gradient */
-  background: linear-gradient(135deg,
-    var(--primary-dark) 0%,
-    var(--primary) 50%,
-    var(--primary-dark) 100%);
+  /* MANUSCRIPT: Parchment continuation, not dark app header */
+  background: linear-gradient(to bottom,
+    #F4EFE7 0%,
+    #F0EBE3 100%);
 
-  /* Aged gold border with top highlight */
-  border-bottom: 3px solid var(--accent-gold);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 4px 12px rgba(15, 29, 51, 0.5);
+  /* Remove solid border - add elegant separator line via ::after */
+  border-bottom: none;
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
+}
+
+/* Elegant separator line */
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--accent-gold) 20%,
+    var(--accent-gold) 80%,
+    transparent 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .header-content {
@@ -205,25 +218,26 @@ input:focus {
 
 .header-title {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
-  font-weight: var(--weight-bold);
-  color: var(--accent-gold);
+  font-size: 2.2rem; /* Slightly smaller, more elegant */
+  font-weight: var(--weight-semibold); /* Less bold */
+  color: var(--primary-dark); /* Dark text, not gold */
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  justify-content: center; /* Center the title */
+  gap: var(--spacing-sm);
   margin: 0;
-  letter-spacing: var(--tracking-wider);
+  letter-spacing: 0.12em; /* Wide spacing for formality */
+  flex: 1; /* Allow centering */
 
-  /* Subtle depth shadow (not glow) */
-  text-shadow:
-    1px 1px 2px rgba(0, 0, 0, 0.4),
-    0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Remove depth shadow - flat archival text */
+  text-shadow: none;
 }
 
 .header-title i {
-  font-size: 2rem;
+  font-size: 1.5rem; /* Smaller icon */
   color: var(--accent-gold);
-  filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.4));
+  opacity: 0.7; /* Subtle ornamental mark */
+  filter: none;
 }
 
 .header-controls {
@@ -245,22 +259,24 @@ input:focus {
 .search-icon {
   position: absolute;
   left: var(--spacing-md);
-  color: var(--accent-gold);
+  color: var(--text-secondary); /* More subtle, not bright gold */
+  opacity: 0.6;
   pointer-events: none;
+  font-size: 0.9rem; /* Slightly smaller */
 }
 
 .search-input {
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) 40px;
 
-  /* Ivory background with gold border */
-  background: var(--bg-ivory);
-  border: 2px solid var(--accent-gold);
-  border-radius: var(--radius-md);
+  /* MANUSCRIPT: Blend into parchment, subtle border */
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm); /* Minimal rounding */
 
   font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: var(--weight-medium);
+  font-size: 0.9rem; /* Slightly smaller */
+  font-weight: var(--weight-normal);
   color: var(--text-primary);
 
   transition:
@@ -275,9 +291,8 @@ input:focus {
 
 .search-input:focus {
   border-color: var(--accent-gold);
-  box-shadow:
-    0 0 0 3px rgba(201, 169, 97, 0.2),
-    0 4px 12px rgba(201, 169, 97, 0.25);
+  /* Subtle glow, not strong focus ring */
+  box-shadow: 0 0 8px rgba(201, 169, 97, 0.3);
   outline: none;
 }
 
@@ -295,33 +310,28 @@ input:focus {
   background: rgba(231, 76, 60, 0.1);
 }
 
-/* Filter Toggle Button */
+/* Filter Toggle Button - Subtle */
 .filter-toggle-btn {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
 
-  /* Antique gold gradient */
-  background: linear-gradient(135deg,
-    var(--accent-gold) 0%,
-    #D4B76A 100%);
+  /* MANUSCRIPT: Subtle button, not bright gold */
+  background: rgba(201, 169, 97, 0.15);
   color: var(--primary-dark);
 
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
 
   font-family: var(--font-body);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  font-size: 0.9rem; /* Smaller */
 
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: none;
 
   transition:
-    transform var(--transition-base),
-    box-shadow var(--transition-base),
+    opacity var(--transition-base),
     background var(--transition-base);
 }
 
@@ -329,43 +339,46 @@ input:focus {
   background: linear-gradient(135deg,
     #D4B76A 0%,
     #E5C67A 100%);
-  transform: translateY(-2px);
+  /* No transform - dignified illumination only */
+  opacity: 0.95;
   box-shadow:
-    0 6px 16px rgba(201, 169, 97, 0.4),
+    0 4px 12px rgba(201, 169, 97, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-/* Icon Buttons */
+/* Icon Buttons - Subtle Manuscript Controls */
 .icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 36px; /* Smaller */
+  height: 36px;
 
-  background: rgba(255, 255, 255, 0.15);
-  color: var(--accent-gold);
+  /* MANUSCRIPT: Blend into parchment */
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text-secondary); /* Muted, not bright gold */
 
-  border: 1px solid rgba(201, 169, 97, 0.4);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm); /* Minimal rounding */
 
-  font-size: 1rem;
+  font-size: 0.9rem; /* Smaller icons */
 
   transition:
     background var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    opacity var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .icon-btn:hover {
-  background: rgba(201, 169, 97, 0.25);
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
-  color: white;
+  background: rgba(201, 169, 97, 0.15);
+  /* No scale - subtle color shift */
+  color: var(--accent-gold);
+  opacity: 1;
 }
 
 .icon-btn:active {
-  transform: scale(0.95);
+  /* No scale - opacity shift only */
+  opacity: 0.7;
 }
 
 /* Search Results */
@@ -597,12 +610,13 @@ input:focus {
   font-weight: var(--weight-medium);
 
   box-shadow: 0 2px 4px rgba(201, 169, 97, 0.3);
-  transition: transform var(--transition-fast);
+  transition: opacity var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .filter-chip:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(201, 169, 97, 0.4);
+  /* No transform - subtle glow only */
+  opacity: 0.9;
+  box-shadow: 0 0 8px rgba(201, 169, 97, 0.5);
 }
 
 .filter-chip button {
@@ -643,8 +657,9 @@ input:focus {
 
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(42, 62, 122, 0.3);
+  /* No transform - subtle glow only */
+  opacity: 0.95;
+  box-shadow: 0 0 12px rgba(42, 62, 122, 0.4);
 }
 
 .btn-secondary {
@@ -654,7 +669,8 @@ input:focus {
 
 .btn-secondary:hover {
   background: #d0d5db;
-  transform: translateY(-2px);
+  /* No transform - subtle opacity change */
+  opacity: 0.9;
 }
 
 /* Filter Stats */
@@ -677,14 +693,41 @@ input:focus {
    Main Container & Tree
    =================================== */
 .main-container {
-  margin-top: 80px;
-  padding: var(--spacing-lg);
-  min-height: calc(100vh - 80px);
+  margin-top: 60px; /* Reduced gap below fixed header */
+  padding: var(--spacing-sm) var(--spacing-lg); /* Reduced top padding */
+  min-height: calc(100vh - 60px);
+  position: relative;
+}
+
+/* MANUSCRIPT: Decorative corner ornaments (top corners only) */
+.main-container::before,
+.main-container::after {
+  content: '';
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L40,0 Q0,0 0,40 L0,0 Z" fill="none" stroke="%23C9A961" stroke-width="0.4" opacity="0.15"/><path d="M10,10 L30,10 Q10,10 10,30 L10,10 Z" fill="none" stroke="%23C9A961" stroke-width="0.3" opacity="0.1"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main-container::before {
+  top: 70px; /* Adjusted for reduced header height */
+  left: 30px;
+}
+
+.main-container::after {
+  top: 70px; /* Adjusted for reduced header height */
+  right: 30px;
+  transform: scaleX(-1); /* Mirror horizontally */
 }
 
 .tree-container {
   width: 100%;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 80px); /* Reduced to maximize viewport usage */
 
   /* Lighter parchment with fine grain texture */
   background:
@@ -700,26 +743,61 @@ input:focus {
     /* Subtle gradient */
     linear-gradient(to bottom, #F9F6F0 0%, #F3EDE3 100%);
 
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg); /* Less rounded */
 
-  /* Double border ornamental effect */
-  border: 2px solid var(--accent-gold);
-  outline: 1px solid rgba(201, 169, 97, 0.3);
-  outline-offset: -6px;
+  /* MANUSCRIPT: Frame-like treatment */
+  border: 1px solid var(--accent-gold);
+  outline: 3px solid var(--border-light);
+  outline-offset: -8px;
 
-  /* Soft inset shadow for recessed feel */
+  /* Shadow suggests artifact placed on surface */
   box-shadow:
-    var(--shadow-inset),
-    var(--shadow-lg);
+    0 8px 30px rgba(30, 58, 95, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 
   overflow: hidden;
   position: relative;
+}
+
+/* MANUSCRIPT: Family initial watermark in center */
+.tree-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="85" fill="none" stroke="%23C9A961" stroke-width="0.3" opacity="0.08"/><text x="100" y="125" font-family="serif" font-size="100" font-weight="300" fill="%23C9A961" opacity="0.04" text-anchor="middle" letter-spacing="0.05em">F</text></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* MANUSCRIPT: Vignette overlay for depth */
+.tree-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center,
+    transparent 30%,
+    rgba(30, 58, 95, 0.08) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .family-tree-svg {
   width: 100%;
   height: 100%;
   cursor: grab;
+  /* Ensure tree renders above watermark and vignette */
+  position: relative;
+  z-index: 2;
 }
 
 .family-tree-svg:active {
@@ -733,12 +811,11 @@ input:focus {
 }
 
 .tree-node:hover .node-card {
-  transform: translateY(-4px) scale(1.02);
+  /* No transform - dignified illumination only */
   filter: drop-shadow(0 2px 4px rgba(30, 58, 95, 0.10))
-          drop-shadow(0 12px 40px rgba(0, 0, 0, 0.15))
-          drop-shadow(0 0 20px rgba(201, 169, 97, 0.2));
+          drop-shadow(0 0 16px rgba(201, 169, 97, 0.4)); /* Gentle gold glow */
   stroke: var(--accent-gold);
-  stroke-width: 2.5;
+  stroke-width: 3; /* Thicker border for emphasis */
 }
 
 .tree-node:hover .node-card::before {
@@ -754,131 +831,122 @@ input:focus {
 }
 
 .tree-node:hover .node-photo {
-  transform: scale(1.05);
-  border-width: 4px;
+  /* No scale - gentle illumination only */
+  filter: brightness(1.05);
+  border-color: var(--accent-gold);
   box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.15),
     inset 0 1px 2px rgba(0, 0, 0, 0.10),
-    0 0 12px rgba(200, 169, 107, 0.3);
+    0 0 12px rgba(200, 169, 107, 0.4); /* Slightly stronger glow */
 }
 
 .node-card {
-  /* SVG elements use fill, not background */
+  /* MANUSCRIPT: Framed portrait miniature, not dashboard card */
   fill: var(--card-bg);
   background: var(--card-bg);
 
   stroke: var(--border-elegant);
-  stroke-width: 2;
+  stroke-width: 3; /* Thicker frame border */
 
-  border-radius: var(--radius-lg);
-  padding: 14px;
+  /* SHARP CORNERS - portrait frames don't round */
+  border-radius: var(--radius-lg); /* Will be 2px from earlier change */
+
+  /* TIGHTER PADDING - portrait composition */
+  padding: 10px 10px 14px 10px; /* Tighter sides, room for text below */
   position: relative;
 
-  /* Layered shadow system for depth */
-  box-shadow:
-    0 1px 2px rgba(30, 58, 95, 0.08),
-    0 4px 12px rgba(30, 58, 95, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  /* SIMPLIFIED SHADOW - subtle depth only */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 
-  /* Premium filter for depth */
-  filter: drop-shadow(0 1px 2px rgba(30, 58, 95, 0.08)) drop-shadow(0 4px 12px rgba(30, 58, 95, 0.15));
+  /* Subtle drop shadow via filter */
+  filter: drop-shadow(0 2px 6px rgba(30, 58, 95, 0.12));
 
-  /* Smooth premium transitions */
+  /* Smooth transitions */
   transition:
-    transform var(--transition-base),
     filter var(--transition-base),
     stroke var(--transition-base);
 }
 
-/* Inner border for double-frame effect */
+/* MANUSCRIPT: Simple double-line frame effect */
 .node-card::before {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 4px;
-  right: 4px;
-  bottom: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px solid rgba(30, 58, 95, 0.15); /* Subtle inner line */
+  border-radius: 1px;
   pointer-events: none;
-  opacity: 0.6;
-  transition: opacity var(--transition-base);
+  opacity: 1;
 }
 
-/* Top-right corner flourish - visible on hover */
+/* Remove corner flourish - too decorative/modern */
 .node-card::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 12px;
-  height: 12px;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path d="M0,12 Q0,6 6,6 Q12,0 12,0" fill="none" stroke="%23C9A961" stroke-width="0.5"/></svg>');
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  pointer-events: none;
+  display: none;
 }
 
-/* Male: Subtle cool undertone with royal blue accent */
+/* MANUSCRIPT: Subtle male frame - royal blue accent */
 .node-card.male {
   fill: #FFFDF8;
-  background: linear-gradient(145deg, #FFFDF8 0%, #F5EFE6 100%);
+  background: #FFFDF8;
   stroke: var(--primary-light);
-  stroke-width: 2;
-  filter: drop-shadow(0 1px 2px rgba(42, 80, 128, 0.12)) drop-shadow(0 8px 30px rgba(42, 80, 128, 0.12));
+  stroke-width: 3;
+  /* Simplified shadow */
+  filter: drop-shadow(0 2px 6px rgba(42, 80, 128, 0.10));
 }
 
 .node-card.male::before {
-  border-color: rgba(42, 80, 128, 0.15);
+  border-color: rgba(42, 80, 128, 0.12);
 }
 
-/* Female: Subtle warm undertone with mahogany accent */
+/* MANUSCRIPT: Subtle female frame - mahogany accent */
 .node-card.female {
   fill: #FAF8F6;
-  background: linear-gradient(145deg, #FFFDF8 0%, #F5EFE6 100%);
+  background: #FAF8F6;
   stroke: var(--accent-mahogany-light);
-  stroke-width: 2;
-  filter: drop-shadow(0 1px 2px rgba(125, 84, 70, 0.12)) drop-shadow(0 8px 30px rgba(125, 84, 70, 0.12));
+  stroke-width: 3;
+  /* Simplified shadow */
+  filter: drop-shadow(0 2px 6px rgba(125, 84, 70, 0.10));
 }
 
 .node-card.female::before {
-  border-color: rgba(125, 84, 70, 0.15);
+  border-color: rgba(125, 84, 70, 0.12);
 }
 
-/* Deceased: Double border + sepia overlay */
+/* MANUSCRIPT: Deceased - ornamental double border */
 .node-card.deceased {
-  opacity: 0.88;
-  stroke-width: 3;
-  stroke-dasharray: 4, 2;
+  opacity: 0.85;
+  stroke-width: 4; /* Thicker ornamental frame */
+  stroke-dasharray: 6, 3; /* More elegant dash pattern */
   fill: #F3EDE3;
-  background: linear-gradient(135deg,
-    rgba(243, 237, 227, 0.95) 0%,
-    rgba(249, 246, 240, 0.95) 100%);
-  filter: sepia(0.15) drop-shadow(0 4px 12px rgba(30, 58, 95, 0.10));
+  background: #F3EDE3;
+  /* Sepia filter for aged appearance */
+  filter: sepia(0.15) drop-shadow(0 2px 6px rgba(30, 58, 95, 0.08));
 }
 
 .node-card.deceased::before {
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 .node-photo {
-  width: 80px;
+  /* MANUSCRIPT: Sized to fit within ornate frames */
+  width: 80px; /* Smaller to fit within 100px ornate frames */
   height: 80px;
   border-radius: var(--radius-full);
   object-fit: cover;
   margin-bottom: var(--spacing-sm);
 
-  /* Premium gold ring with soft shadow */
-  border: 3px solid #C8A96B;
+  /* Thinner elegant gold ring */
+  border: 2px solid var(--accent-gold);
   box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.12),
-    inset 0 1px 2px rgba(0, 0, 0, 0.08);
+    0 2px 8px rgba(0, 0, 0, 0.10),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
 
   background: white;
   transition:
-    transform var(--transition-base),
-    border-width var(--transition-base),
-    box-shadow var(--transition-base);
+    border-color var(--transition-base),
+    filter var(--transition-base);
 }
 
 .node-photo.deceased {
@@ -887,28 +955,55 @@ input:focus {
   opacity: 0.9;
 }
 
+/* MANUSCRIPT: Ornate frame overlays */
+.node-frame {
+  /* Frame overlays the photo as subtle ornamental border */
+  position: absolute;
+  pointer-events: none; /* Doesn't block photo clicks */
+  opacity: 0.95;
+  mix-blend-mode: multiply; /* Blends with photo naturally */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transition: opacity var(--transition-base);
+}
+
+/* Frame becomes more prominent on hover */
+.tree-node:hover .node-frame {
+  opacity: 1;
+  filter: drop-shadow(0 3px 6px rgba(201, 169, 97, 0.3));
+}
+
+/* Saint/origin frames get subtle gold glow */
+.tree-node[data-is-root="true"] .node-frame {
+  filter: drop-shadow(0 2px 6px rgba(201, 169, 97, 0.4));
+}
+
 .node-name {
+  /* MANUSCRIPT: Exhibition label styling */
   font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
+  font-size: 0.95rem; /* Smaller, more elegant */
+  font-weight: var(--weight-medium); /* Less bold */
   color: var(--text-primary);
   text-align: center;
   margin-bottom: var(--spacing-xs);
-  max-width: 110px;
+  margin-top: var(--spacing-sm);
+  max-width: 120px; /* Wider for larger photos */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: 0.03em; /* Subtle spacing */
   transition: color var(--transition-fast);
 }
 
 .node-dates {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
+  /* MANUSCRIPT: Dates are genealogical records - must be serif */
+  font-family: var(--font-display);
+  font-size: 0.75rem; /* Smaller, like museum label annotation */
+  font-weight: 400;
+  font-style: italic; /* Manuscript annotation style */
   color: var(--text-secondary);
   text-align: center;
-  letter-spacing: var(--tracking-normal);
+  letter-spacing: 0.01em;
+  opacity: 0.8; /* Faded for archival feel */
 }
 
 /* Highlighted Node */
@@ -941,43 +1036,43 @@ input:focus {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
-/* Tree Links */
-/* Parent-child links with subtle glow */
+/* MANUSCRIPT: Engraved lineage paths - ink on parchment */
 .tree-link {
   fill: none;
   stroke: var(--primary);
-  stroke-width: 2.5px;
-  stroke-opacity: 0.35;
+  stroke-width: 1.5px; /* Thinner, delicate ink strokes */
+  stroke-opacity: 0.5; /* Higher opacity for "ink on paper" feel */
 
-  /* Subtle glow effect for engraved lineage feel */
-  filter: drop-shadow(0 1px 2px rgba(30, 58, 95, 0.25));
+  /* Organic texture via subtle filter */
+  filter: drop-shadow(0 0.5px 1px rgba(30, 58, 95, 0.2));
 
-  transition:
-    stroke-opacity var(--transition-base),
-    stroke-width var(--transition-base),
-    filter var(--transition-base);
+  /* Remove hover transforms - lineage is permanent */
+  transition: stroke-opacity 300ms ease;
 }
 
 .tree-link:hover {
-  stroke-opacity: 0.65;
-  stroke-width: 3px;
-  filter: drop-shadow(0 2px 4px rgba(30, 58, 95, 0.4));
+  stroke-opacity: 0.75; /* Subtle emphasis only */
+  /* No width change - lineage doesn't thicken on hover */
 }
 
-/* Spouse links with elegant gold styling */
+/* MANUSCRIPT: Spouse links - ceremonial gold connection */
 .tree-link.spouse-link {
   stroke: var(--accent-gold);
-  stroke-width: 3px;
-  stroke-opacity: 0.8;
-  stroke-dasharray: 6, 4;
+  stroke-width: 2px; /* Slightly thicker than parent-child */
+  stroke-opacity: 0.7;
 
-  /* Elegant gold glow for premium feel */
-  filter: drop-shadow(0 0 2px rgba(200, 169, 107, 0.4));
+  /* Fine dotted pattern for elegance */
+  stroke-dasharray: 2, 4; /* Delicate dots */
+  stroke-linecap: round;
 
-  transition:
-    stroke-opacity var(--transition-base),
-    stroke-width var(--transition-base),
-    filter var(--transition-base);
+  /* Gold ink feel */
+  filter: drop-shadow(0 0 1px rgba(201, 169, 97, 0.4));
+
+  transition: stroke-opacity 300ms ease;
+}
+
+.tree-link.spouse-link:hover {
+  stroke-opacity: 0.9;
 }
 
 .tree-link.spouse-link:hover {
@@ -1174,6 +1269,8 @@ input:focus {
 .detail-content {
   flex: 1;
   font-size: var(--text-base);
+  /* MANUSCRIPT: Genealogical information uses serif */
+  font-family: var(--font-display);
 }
 
 .detail-content strong {
@@ -1186,9 +1283,11 @@ input:focus {
 }
 
 .detail-content span {
-  font-family: var(--font-body);
+  /* Keep serif for dates and genealogical content */
+  font-family: var(--font-display);
+  font-style: italic;
   color: var(--text-secondary);
-  font-weight: var(--weight-normal);
+  font-weight: 400;
 }
 
 .person-relationships {
@@ -1226,6 +1325,9 @@ input:focus {
   margin-bottom: var(--spacing-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
+  /* MANUSCRIPT: Relationship names use serif */
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
 }
 
 .relationship-list li:hover {
