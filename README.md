@@ -1,17 +1,19 @@
 # Family Tree Visualization
 
-Interactive family tree visualization built with D3.js - designed to display 10 generations (~160 family members) on GitHub Pages.
+**Premium royal genealogy visualization** built with D3.js - inspired by luxury ancestry platforms, historical lineage books, and museum exhibits. Designed to display 10 generations (~160 family members) with museum-quality aesthetics.
 
-## 🌳 Features
+## ✨ Premium Features
 
-- **Interactive Tree Visualization**: Pan, zoom, and explore your family tree
-- **Search Functionality**: Find family members by name or birth/death dates
-- **Detailed Info Panels**: Click any person to see their information and relationships
-- **Modern UI Design**: Beautiful, responsive design with smooth animations
-- **Mobile-Friendly**: Touch gestures, responsive layout, optimized for all devices
-- **Filter Options**: Filter by generation, status (living/deceased), and photos
-- **Photo Support**: Display family member photos or attractive placeholder initials
-- **No Dependencies**: Pure D3.js implementation - no build tools required
+- **🎨 Luxury Genealogy Design**: Museum-quality aesthetic inspired by royal archives, historical manuscripts, and premium ancestry platforms
+- **🏛️ Heritage Theme**: Warm parchment backgrounds, antique gold accents, elegant serif typography
+- **🔍 Interactive Exploration**: Smooth pan, zoom, expand/collapse with cinematic animations
+- **🔎 Advanced Search**: Real-time search with highlighting, result navigation, and auto-centering
+- **📖 Detailed Info Panels**: Click any person to explore relationships with elegant slide-in panels
+- **🎯 Smart Filtering**: Filter by generation range, living/deceased status, and photo availability
+- **📸 Premium Photo Frames**: 3px gold ring borders with soft shadows and hover effects
+- **📱 Fully Responsive**: Touch gestures, mobile-optimized layout, premium feel on all devices
+- **🎭 Subtle Gender Accents**: Royal blue for males, mahogany for females (mature, elegant)
+- **⚡ No Build Tools**: Pure D3.js + CSS - deploy directly to GitHub Pages
 
 ## 🚀 Quick Start
 
@@ -113,13 +115,14 @@ Edit `data/family-data.json` to add your family members. The data uses a hierarc
 1. Place photos in the `images/photos/` folder
 2. Name files as referenced in your data (e.g., `person-1.jpg`)
 3. Recommended photo specs:
-   - Size: 400x400px minimum
+   - Size: 400x400px minimum (800x800px ideal for retina)
    - Format: JPG, PNG, or WebP
    - File size: <200KB for best performance
 4. Photos are automatically:
-   - Displayed in circular frames
-   - Shown as grayscale for deceased members
-   - Replaced with initials if missing
+   - Displayed in circular frames with **3px antique gold borders**
+   - Enhanced with soft shadows and elegant hover effects
+   - Shown as grayscale + sepia for deceased members (bronze border)
+   - Replaced with elegant gradient placeholders with initials if missing
 
 ## 🎨 Features Guide
 
@@ -203,6 +206,18 @@ Ready to add more features? Here are some enhancements you can implement:
 5. **Edit Mode**: In-browser editing of family data
 6. **Dark Mode**: Toggle between light and dark themes
 
+## 🎨 Design Credits
+
+**Premium Royal Genealogy Theme** inspired by:
+- Luxury ancestry platforms (Ancestry.com Premium, MyHeritage)
+- Royal archives and museums (British Royal Archives aesthetic)
+- Historical genealogy manuscripts (illuminated family trees)
+- High-end editorial design (National Geographic, museum catalogs)
+
+**Typography:**
+- [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) - Christian Thalmann (Open Font License)
+- [Inter](https://fonts.google.com/specimen/Inter) - Rasmus Andersson (Open Font License)
+
 ## 📄 License
 
 This project uses:
@@ -231,6 +246,6 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ using D3.js**
+**Built with ❤️ using D3.js • Version 2.0 - Premium Royal Genealogy Edition**
 
-Enjoy exploring your family history!
+Enjoy exploring your family history with museum-quality elegance!

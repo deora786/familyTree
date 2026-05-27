@@ -8,52 +8,75 @@ An interactive, elegant family tree visualization built with D3.js for displayin
 
 ## Design Philosophy
 
-### Visual Theme: Royal & Elegant
-The design emphasizes **royalty, elegance, and heritage** with a warm, welcoming feel appropriate for family history.
+### Visual Theme: Premium Royal Genealogy
+The design embodies **luxury genealogy, heritage, and museum-quality aesthetics** inspired by historical lineage books, royal archives, and premium ancestry platforms. The visual approach evokes timeless elegance with warm, archival parchment textures.
 
 **Key Design Principles:**
-- High contrast for excellent readability
-- Professional, timeless aesthetic
-- Warm, family-friendly color palette
-- Clear visual hierarchy
-- Smooth, polished interactions
+- Premium editorial feel with soft depth and texture
+- Museum/archive quality aesthetic
+- Elegant, timeless, warm, heritage-inspired
+- Subtle ornamental flourishes
+- Cinematic animations without playful bounce
+- Luxury without pretension
 
-### Color Scheme
+**Design Inspirations:**
+- Historical genealogy manuscripts and illuminated family trees
+- Royal archives and museums (British Royal Archives aesthetic)
+- Luxury ancestry platforms (Ancestry.com Premium, MyHeritage)
+- High-end editorial design (National Geographic, museum catalogs)
+
+### Color Scheme - Premium Heritage Palette
 
 ```css
-/* Primary Colors */
---primary: #2C3E7A           /* Deep Royal Blue - headers, male borders, links */
---primary-light: #4A5FA5     /* Lighter Royal Blue - hover states */
---primary-dark: #1A2550      /* Darker Royal Blue - depth */
+/* Premium Royal Primary Colors - Deep Navy */
+--primary: #1E3A5F              /* Deep navy blue (heritage and legacy) */
+--primary-light: #2A5080        /* Medium royal blue (hover states) */
+--primary-dark: #0F1D33         /* Almost black blue (depth) */
 
-/* Accent Colors */
---accent-gold: #D4AF37       /* True Gold - buttons, highlights, photo borders */
---accent-rose: #8B4653       /* Royal Rose/Burgundy - female borders */
---accent-purple: #6B4E89     /* Royal Purple - optional accents */
+/* Antique Gold & Bronze Accents */
+--accent-gold: #C9A961          /* Warm antique gold (aged, not shiny) */
+--accent-bronze: #8B6F47        /* Aged bronze for secondary accents */
 
-/* Neutrals */
---card-bg: #FFFFFF           /* Pure white - card backgrounds */
---text-primary: #1A1A2E      /* Dark Navy - main text */
---text-secondary: #4A4A5E    /* Medium gray - dates, secondary text */
---border-elegant: #C9B896    /* Gold-tinted border */
+/* Mahogany Brown (Female Accents) */
+--accent-rose: #5C3A31          /* Rich mahogany (mature, elegant) */
+--accent-mahogany-light: #7D5446 /* Lighter mahogany */
+
+/* Ivory & Parchment - Warm Neutrals */
+--card-bg: #F9F6F0              /* Warm ivory (NOT pure white) */
+--card-bg-alt: #F3EDE3          /* Darker parchment */
+--bg-parchment-base: #E8DFD0    /* Warm beige base */
+--bg-parchment-light: #F0E8D8   /* Lighter parchment */
+--text-primary: #1A1A2E         /* Deep navy text */
+--text-secondary: #7D7363       /* Warm gray */
+--border-elegant: #C9A961       /* Antique gold borders */
 
 /* Backgrounds */
-Body: Linear gradient #E8E4E0 → #F5F1ED → #E0D5C7 (warm ivory/beige)
-Tree Container: Linear gradient #F8F6F4 → #EBE8E4 (lighter warm gray)
-Header: Linear gradient from primary-dark to primary with gold border
+Body: 4-layer parchment with noise texture, radial highlights, and vignette
+  - Noise pattern via SVG data URI
+  - Top-left radial highlight for depth
+  - Subtle edge vignette
+  - Base gradient: #F4EFE7 → #E8DED1
+Tree Container: Light parchment with crosshatch grain texture
+  - Fine grain pattern using repeating gradients
+  - Double gold border (ornamental effect)
+  - Soft inset shadows
+Header: Deep royal gradient with aged gold border
 ```
 
-### Typography
+### Typography - Premium Editorial
 
 **Fonts:**
-- **Headings:** Poppins (600-700 weight) - Modern, confident
-- **Body:** Inter (400-600 weight) - Clean, highly readable
+- **Display (Headings/Names):** Cormorant Garamond (400-700 weight) - Elegant serif, heritage feel
+- **Body (Dates/Metadata):** Inter (300-600 weight) - Clean, highly readable
+
+**Philosophy:** Cormorant Garamond brings royal/editorial elegance while Inter ensures modern readability. This combination is used by luxury publications and genealogy platforms.
 
 **Hierarchy:**
-- Header Title: 1.5rem, gold, heavy text-shadow
-- Node Names: 0.95rem, bold (700), dark navy
-- Node Dates: 0.8rem, semi-bold (600), medium gray
-- Info Panel: Clear sizing hierarchy
+- Header Title: 2rem (32px), Cormorant, antique gold, subtle depth shadow
+- Node Names: 1.1rem (17.6px), Cormorant, semi-bold, dark navy, wide tracking
+- Node Dates: 0.85rem (13.6px), Inter, medium weight, warm gray
+- Panel Names: 1.8rem (28.8px), Cormorant, bold, decorative gold underline
+- Info Panel: Clear sizing hierarchy with serif for emphasis
 
 ## Technical Stack
 
@@ -203,64 +226,90 @@ const config = {
 };
 ```
 
-### Animation Easing
+### Animation Easing - Premium Cinematic
 
-- **Enter:** `d3.easeCubicOut` - Fast start, slow end
-- **Update:** `d3.easeCubicInOut` - Smooth both ways
-- **Exit:** `d3.easeCubicIn` - Slow start, fast end
+- **Node Entrance:** `cubic-bezier(0.4, 0, 0.2, 1)` - Smooth, elegant, no overshoot (500ms)
+- **Transitions:** `cubic-bezier(0.4, 0, 0.2, 1)` - Standard premium easing (400ms)
+- **Emphasized:** `cubic-bezier(0.65, 0, 0.35, 1)` - Strong elegant easing (500ms)
+- **Philosophy:** Avoid bounce/overshoot - use slow fade-ins, smooth transforms, elegant glow
 
-## Design Patterns
+## Design Patterns - Premium Royal Aesthetic
 
-### Node Cards
+### Node Cards - Luxury Portrait Cards
 
-**Structure:**
+**SVG Structure:**
 ```
 <g class="tree-node">
-  <rect class="node-card male|female">  // Border and background
+  <rect class="node-card male|female">  // SVG rect with fill and stroke
   <g class="expand-indicator-group">    // +/− button (if has children)
     <circle>                             // Button background
     <text>+/−</text>                     // Button icon
   </g>
-  <image class="node-photo">            // Photo or placeholder
-  <text class="node-name">              // Person name
-  <text class="node-dates">             // Birth-death years
+  <image class="node-photo">            // Photo with 3px gold ring
+  <text class="node-name">              // Cormorant Garamond, wide tracking
+  <text class="node-dates">             // Inter, warm gray
 </g>
 ```
 
-**Gender Differentiation:**
-- Male: Royal blue border (#2C3E7A)
-- Female: Royal rose border (#8B4653)
-- White background for both (high contrast)
+**Premium Card Styling:**
+- **Base**: Ivory/parchment background with layered shadows
+- **Inner Border**: White border (pseudo-element) for double-frame effect
+- **Corner Flourish**: SVG ornamental curve (visible on hover)
+- **Shadows**: Deep `0 8px 30px` with gender-specific color tints
+- **Hover**: Elegant lift (-4px), scale (1.02), gold border glow
+
+**Gender Differentiation (Subtle, Mature):**
+- **Male**: 
+  - Fill: `#FFFDF8` (ivory with cool undertone)
+  - Border: Royal blue `#2A5080`
+  - Shadow: Blue-tinted `rgba(42, 80, 128, 0.12)`
+- **Female**: 
+  - Fill: `#FAF8F6` (ivory with warm undertone)
+  - Border: Mahogany `#7D5446`
+  - Shadow: Mahogany-tinted `rgba(125, 84, 70, 0.12)`
+- **Philosophy**: Avoid bright pink/blue - use mature, elegant accents
 
 **Deceased Styling:**
-- Double border
-- Slightly gray background (#F5F5F5)
-- Grayscale photo filter
-- 85% opacity
+- Double-dashed border (`stroke-dasharray: 4, 2`)
+- Parchment background `#F3EDE3`
+- Sepia filter (15%)
+- Grayscale photo filter with sepia
+- 88% opacity
+- Bronze border color
 
-### Photo Placeholders
+### Photo Styling - Premium Gold Frames
 
-**SVG Generation:**
+**Photo Borders:**
+- **3px gold ring** (`#C8A96B`) - elegant, not too thick
+- Soft shadow: `0 3px 10px rgba(0,0,0,0.12)`
+- Inset shadow for depth: `inset 0 1px 2px rgba(0,0,0,0.08)`
+- Hover: Scales to 1.05, border increases to 4px with gold glow
+- Deceased: Bronze border, grayscale + sepia filter
+
+**Photo Placeholders:**
 - Circular gradient (darker to lighter)
-- Male: Blue gradient (#3D52A0 → #5C6FBF)
-- Female: Rose gradient (#A0404F → #BF5566)
-- White initials (42px, bold, text-shadow)
-- Data URI encoding for inline display
+- Male: Royal blue gradient (#3D52A0 → #5C6FBF)
+- Female: Mahogany gradient (#A0404F → #BF5566)
+- White initials (42px, Cormorant Garamond, bold, text-shadow)
+- Data URI encoding for inline SVG display
 
-### Links/Connections
+### Links/Connections - Elegant Engraved Lineage
 
-**Parent-Child:**
+**Parent-Child Lines:**
 - Curved Bézier paths using d3.linkVertical()
-- Royal blue (#2C3E7A)
-- 2.5px width
-- Connects from midpoint between parents to child
+- Deep navy `#1E3A5F`
+- **Width**: 2.5px (refined, elegant)
+- **Opacity**: 0.35 (subtle, engraved feel)
+- **Glow**: Subtle drop-shadow for depth
+- Hover: Opacity increases to 0.65, width to 3px
 
-**Spouse:**
+**Spouse Links:**
 - Straight horizontal line
-- Gold color (#D4AF37)
-- Dashed (8px dash, 4px gap)
-- 3px width
-- Higher visual weight for clarity
+- **Antique gold** `#C8A96B`
+- **Dashed pattern**: 6px dash, 4px gap (elegant rhythm)
+- **Width**: 3px
+- **Glow**: Gold drop-shadow `0 0 2px rgba(200,169,107,0.4)`
+- Hover: Width increases to 3.5px with enhanced glow
 
 ## Known Constraints
 
@@ -270,12 +319,27 @@ const config = {
 4. **Browser-Only:** No server-side rendering or SEO optimization
 5. **Large Trees:** Performance may degrade beyond ~500 people (not yet tested)
 
-## Current Issues / Areas for Improvement
+## Recent Design Evolution
 
-### Readability
-- ✅ **FIXED:** Changed from dark gradients to white cards with high contrast text
-- ✅ **FIXED:** Increased font weights and sizes
-- ✅ **FIXED:** Removed text shadows that reduced contrast
+### Premium Royal Genealogy Redesign (May 2026)
+- ✅ **COMPLETE:** Full transformation to luxury genealogy aesthetic
+- ✅ **Color Palette:** Deep navy (#1E3A5F), antique gold (#C9A961), mahogany (#5C3A31)
+- ✅ **Typography:** Cormorant Garamond (display) + Inter (body)
+- ✅ **Backgrounds:** Multi-layer parchment with CSS textures (no image files)
+- ✅ **Cards:** Layered premium ivory cards with ornamental details
+- ✅ **Shadows:** Deep premium shadows (0 8px 30px) with SVG drop-shadow filters
+- ✅ **Animations:** Cinematic easing, no bounce/overshoot
+- ✅ **Borders:** Subtle gender differentiation (royal blue vs mahogany)
+- ✅ **Photos:** 3px gold rings with soft shadows
+- ✅ **Links:** Subtle engraved lineage feel (0.35 opacity)
+
+### Design Improvements Applied
+- ✅ Increased card shadow depth for premium feel
+- ✅ Added 4th background layer (radial highlight) for depth
+- ✅ Refined connector lines (more subtle, elegant)
+- ✅ Updated photo frames (3px gold rings)
+- ✅ Removed elastic bounce from animations
+- ✅ Applied SVG-compatible styling (fill/stroke instead of background/border)
 
 ### Layout
 - ⚠️ **Consider:** Alternate layout for very wide trees (>10 siblings)
@@ -352,9 +416,10 @@ const config = {
 ### Animations
 - ✅ Smooth expand/collapse
 - ✅ Links animate with nodes
-- ✅ No jerky movements
-- ✅ Consistent timing
-- ✅ Proper easing curves
+- ✅ Cinematic easing (no bounce/overshoot)
+- ✅ Consistent timing (500ms entrance, 400ms transitions)
+- ✅ Premium cubic-bezier curves
+- ✅ Elegant hover effects with gold glow
 
 ## Deployment to GitHub Pages
 
@@ -409,32 +474,45 @@ const config = {
 ## Tips for Future Claude Sessions
 
 **When asked to improve design:**
-1. Review this color scheme - maintain royal/elegant theme
-2. Ensure high contrast for readability (current cards are white)
-3. Keep text legible: dark navy (#1A1A2E) on white backgrounds
-4. Maintain gold accents for consistency
-5. Test hover states and animations
+1. **Maintain premium aesthetic** - Deep navy, antique gold, mahogany, ivory/parchment
+2. **Typography** - Cormorant Garamond for display, Inter for body
+3. **Backgrounds** - Keep warm parchment textures, avoid pure white
+4. **Shadows** - Use deep premium shadows (0 8px 30px) with color tints
+5. **Animations** - Cinematic easing, no bounce/overshoot
+6. **Gender differentiation** - Subtle (not bright pink/blue)
+7. **Test hover states** - Gold glow effects, elegant lift
 
 **When modifying layout:**
-1. Check `config` object for spacing values
+1. Check `config` object for spacing values (js/family-tree.js)
 2. Test with collapsed/expanded states
-3. Verify spouse positioning logic
-4. Ensure responsive breakpoints still work
-5. Test animations with easing curves
+3. Verify spouse positioning logic (side-by-side layout)
+4. Ensure responsive breakpoints still work (mobile.css)
+5. Test animations with premium cubic-bezier curves
 
 **When adding features:**
 1. Follow existing code patterns (e.g., debounced events)
 2. Add to header controls or info panel, not overlays
-3. Maintain smooth animations (500ms, cubic easing)
+3. Maintain smooth animations (500ms entrance, 400ms transitions)
 4. Update this CLAUDE.md with new features
 5. Test on mobile devices
+6. Ensure premium aesthetic maintained
 
 **When debugging:**
 1. Check browser console (console.log statements present)
 2. Verify data structure in family-data.json
 3. Test with collapsed/expanded states
 4. Check D3.js data binding keys
-5. Verify CSS class names match JS
+5. **SVG styling** - Use `fill`/`stroke` for SVG elements, not `background`/`border`
+6. **Filters** - SVG elements need `drop-shadow` filters, not `box-shadow`
+7. Verify CSS class names match JS
+
+**Critical Design Constraints:**
+- **NO bright colors** - avoid neon, bright gradients
+- **NO flat dashboard aesthetics** - maintain museum/archive quality
+- **NO pure white backgrounds** - use warm ivory/parchment
+- **NO playful animations** - cinematic only, no bounce
+- **YES to ornamental details** - corner flourishes, double borders
+- **YES to layered depth** - multiple shadows, gradients, textures
 
 ## Contact & Credits
 
@@ -444,9 +522,13 @@ const config = {
 - Google Fonts (Open Font License)
 
 **Design Philosophy:**
-- Inspired by royal family trees and genealogical charts
-- Focus on elegance, warmth, and heritage
-- Prioritizing readability and user experience
+- Inspired by **luxury genealogy platforms** (Ancestry Premium, MyHeritage)
+- **Royal archives and museums** (British Royal Archives aesthetic)
+- **Historical genealogy manuscripts** (illuminated family trees)
+- **High-end editorial design** (National Geographic, museum catalogs)
+- Focus on **elegance, timeless beauty, and heritage**
+- **Museum-quality aesthetic** avoiding generic dashboard design
+- Prioritizing **premium feel** and **exceptional user experience**
 
 **For Support:**
 - Check README.md for user documentation
@@ -456,5 +538,5 @@ const config = {
 ---
 
 **Last Updated:** May 27, 2026
-**Version:** 1.0
-**Status:** Fully functional, ready for real data
+**Version:** 2.0 - Premium Royal Genealogy Edition
+**Status:** Premium redesign complete, ready for deployment
