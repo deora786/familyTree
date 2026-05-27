@@ -779,7 +779,7 @@ input:focus {
   transform: translate(-50%, -50%);
   width: 600px;
   height: 600px;
-  background-image: url('../images/crest/deora-crest.png');
+  background-image: url('../images/crest/deora-crest-transparent.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
