@@ -15,7 +15,8 @@
   }
 
   .header-title {
-    font-size: 1.25rem;
+    font-size: var(--text-2xl);
+    letter-spacing: var(--tracking-wide);
   }
 
   .header-controls {
@@ -56,21 +57,22 @@
 
   /* Tree Nodes - Smaller for mobile */
   .node-card {
-    padding: 8px;
+    padding: 10px;
   }
 
   .node-photo {
     width: 60px;
     height: 60px;
+    border-width: 4px;
   }
 
   .node-name {
-    font-size: 0.8rem;
+    font-size: var(--text-base);
     max-width: 80px;
   }
 
   .node-dates {
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
   }
 
   /* Info Panel - Full screen on mobile */
@@ -91,6 +93,11 @@
   .person-photo-large img {
     width: 150px;
     height: 150px;
+    border-width: 5px;
+  }
+
+  .panel-name {
+    font-size: var(--text-xl);
   }
 
   /* Larger tap targets for mobile */
