@@ -663,11 +663,11 @@ function getPhotoOrDefault(node) {
 
 // Get appropriate frame based on person's status
 function getFrameImage(d) {
-  // Check if this is the root person (generation 1, no parent)
-  const isRoot = d.node.generation === 1 && !d.node.parentId;
+  // Check if this person is marked as a saint
+  const isSaint = d.node.role === 'saint';
 
-  if (isRoot) {
-    // Root person gets ornate saint frame
+  if (isSaint) {
+    // Saints get ornate saint frame (Nath Ji Maharaj frame)
     return config.frames.saint;
   }
 
