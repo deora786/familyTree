@@ -6,13 +6,17 @@
 
 - **🎨 Luxury Genealogy Design**: Museum-quality aesthetic inspired by royal archives, historical manuscripts, and premium ancestry platforms
 - **🏛️ Heritage Theme**: Warm parchment backgrounds, antique gold accents, elegant serif typography
+- **🖼️ Ornate Portrait Frames**: Customizable decorative frames overlay photos (saint, male, female styles)
+- **👤 Default Portraits**: Gender-specific default portraits when photos are unavailable
 - **🔍 Interactive Exploration**: Smooth pan, zoom, expand/collapse with cinematic animations
 - **🔎 Advanced Search**: Real-time search with highlighting, result navigation, and auto-centering
-- **📖 Detailed Info Panels**: Click any person to explore relationships with elegant slide-in panels
+- **📖 Detailed Info Panels**: Click any person to explore relationships, notes, and biographical information
+- **📝 Rich Biography Support**: Display detailed notes, life achievements, and historical significance
 - **🎯 Smart Filtering**: Filter by generation range, living/deceased status, and photo availability
-- **📸 Premium Photo Frames**: 3px gold ring borders with soft shadows and hover effects
-- **📱 Fully Responsive**: Touch gestures, mobile-optimized layout, premium feel on all devices
+- **🏅 Special Role Markers**: Highlight saints, founders, or other significant ancestors
+- **📱 Fully Responsive**: Touch gestures, mobile-optimized (44px tap targets), works on all devices
 - **🎭 Subtle Gender Accents**: Royal blue for males, mahogany for females (mature, elegant)
+- **🎨 Customizable Family Crest**: Add your family crest to header and backdrop watermark
 - **⚡ No Build Tools**: Pure D3.js + CSS - deploy directly to GitHub Pages
 
 ## 🚀 Quick Start
@@ -49,13 +53,18 @@
 ├── index.html              # Main HTML file
 ├── css/
 │   ├── styles.css          # Main stylesheet
-│   └── mobile.css          # Mobile-responsive styles
+│   └── mobile.css          # Mobile-responsive styles (<768px, <600px)
 ├── js/
 │   └── family-tree.js      # D3.js visualization logic
 ├── data/
 │   └── family-data.json    # Your family tree data
 ├── images/
+│   ├── crest/              # Family crest images (optional)
+│   ├── frames/             # Ornate photo frames (optional)
+│   ├── defaults/           # Default portraits (optional)
 │   └── photos/             # Family member photos
+├── FRAME_SETUP.md          # Guide for setting up frames and portraits
+├── MOBILE_TESTING.md       # Mobile testing checklist
 └── README.md               # This file
 ```
 
@@ -97,7 +106,10 @@ Edit `data/family-data.json` to add your family members. The data uses a hierarc
 
 - `birth`: Birth date (YYYY-MM-DD format recommended)
 - `death`: Death date (YYYY-MM-DD or null if living)
-- `photo`: Path to photo (or null for placeholder)
+- `photo`: Path to photo (or null for default portrait)
+- `location`: Location/city where person lived
+- `notes`: Biographical information, life achievements, notes (supports paragraphs)
+- `role`: Special role marker (e.g., "saint", "founder") for ornate frames
 - `spouse`: Spouse object (or null if no spouse)
 - `children`: Array of children (or empty array `[]`)
 
@@ -107,11 +119,14 @@ Edit `data/family-data.json` to add your family members. The data uses a hierarc
 - Use consistent date formats (YYYY-MM-DD is recommended)
 - Each person needs a unique `id`
 - Set `death` to `null` for living people
-- Set `photo` to `null` to use placeholder initials
+- Set `photo` to `null` to use gender-appropriate default portrait (or initials if no defaults)
+- Use `role: "saint"` or similar to mark special ancestors with ornate frames
+- Add rich biographical information in the `notes` field
 - No in-family marriages supported in this version
 
-## 📸 Adding Photos
+## 📸 Adding Photos & Frames
 
+### Photos
 1. Place photos in the `images/photos/` folder
 2. Name files as referenced in your data (e.g., `person-1.jpg`)
 3. Recommended photo specs:
@@ -119,10 +134,37 @@ Edit `data/family-data.json` to add your family members. The data uses a hierarc
    - Format: JPG, PNG, or WebP
    - File size: <200KB for best performance
 4. Photos are automatically:
-   - Displayed in circular frames with **3px antique gold borders**
+   - Displayed in circular frames with **ornate overlays** (if frames provided)
    - Enhanced with soft shadows and elegant hover effects
-   - Shown as grayscale + sepia for deceased members (bronze border)
-   - Replaced with elegant gradient placeholders with initials if missing
+   - Shown as grayscale + sepia for deceased members
+   - Replaced with gender-appropriate default portraits or initials if missing
+
+### Ornate Frames (Optional)
+Add decorative frames that overlay photos for a heritage manuscript aesthetic:
+
+1. Create or obtain ornate frame images (100×100px PNG with transparency)
+2. Place in `images/frames/` folder:
+   - `saint-frame.png` - For saints/founders (role:"saint")
+   - `male-frame.png` - For all male family members
+   - `female-frame.png` - For all female family members
+3. See `FRAME_SETUP.md` for detailed specifications and examples
+
+### Default Portraits (Optional)
+Provide default portraits when family photos are unavailable:
+
+1. Create or obtain traditional-style portrait images (90×90px)
+2. Place in `images/defaults/` folder:
+   - `male-default.png` - Default for males without photos
+   - `female-default.png` - Default for females without photos
+3. These will display instead of initials placeholders
+
+### Family Crest (Optional)
+Add your family crest to the header and backdrop:
+
+1. Create or obtain family crest image (PNG with transparent background)
+2. Place in `images/crest/` folder as `family-crest.png`
+3. Update `index.html` to reference your crest file
+4. Crest will appear in header (50px) and as subtle backdrop watermark (600px)
 
 ## 🎨 Features Guide
 
@@ -143,28 +185,38 @@ Edit `data/family-data.json` to add your family members. The data uses a hierarc
 ### Info Panel
 
 - Click any person to open their detail panel
-- View full information, dates, and relationships
+- View full information, dates, location, and generation
+- **Biography/Notes section** displays rich biographical information
 - Click relationship names to navigate to them
 - "View in Tree" button centers the person in the view
 
 ### Navigation
 
-- **Pan**: Click and drag the tree
+- **Pan**: Click and drag the tree (or swipe on mobile)
 - **Zoom**: Use mouse wheel, pinch gesture (mobile), or zoom buttons in header
-- **Reset View**: Click home icon (🏠) in header to return to initial view
+- **Reset View**: Click home icon in header to return to initial view
 - **Expand/Collapse**: Click the **+** or **−** button at the bottom of any node with children
 - **Expand All**: Click expand icon in header to show all branches
 - **Collapse All**: Click compress icon in header to collapse all branches
-- **Mobile**: Swipe to pan, pinch to zoom
+- **Mobile**: Full touch support with 44px minimum tap targets, optimized for phones and tablets
 
 ## 🖥️ Browser Support
 
+### Desktop
 - ✅ Chrome (latest)
 - ✅ Firefox (latest)
 - ✅ Safari (latest)
 - ✅ Edge (latest)
+
+### Mobile & Tablet
 - ✅ Mobile Safari (iOS 12+)
 - ✅ Chrome Mobile (Android 7+)
+- ✅ Touch-optimized with 44px minimum tap targets
+- ✅ Responsive breakpoints: 768px (tablet), 600px (phone)
+- ✅ Full-screen info panels on mobile
+- ✅ Pinch-to-zoom and swipe gestures
+
+See `MOBILE_TESTING.md` for complete mobile testing checklist.
 
 ## 🛠️ Troubleshooting
 
@@ -246,6 +298,8 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ using D3.js • Version 2.0 - Premium Royal Genealogy Edition**
+**Built with ❤️ using D3.js • Version 3.0 - Heritage Edition**
+
+Premium features: Ornate frames • Default portraits • Biography notes • Family crest • Mobile-optimized
 
 Enjoy exploring your family history with museum-quality elegance!
