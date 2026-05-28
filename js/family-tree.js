@@ -66,9 +66,14 @@ function initializeTree() {
 
 // Reset view to initial state
 function resetView() {
+  // Responsive initial scale based on screen width
+  const isMobile = window.innerWidth <= 768;
+  const initialScale = isMobile ? 0.5 : 0.7; // Smaller scale on mobile to see more
+  const initialY = isMobile ? 100 : 80; // More space for mobile header
+
   const initialTransform = d3.zoomIdentity
-    .translate(width / 2, 80)
-    .scale(0.7);
+    .translate(width / 2, initialY)
+    .scale(initialScale);
 
   svg.transition()
     .duration(config.transitionDuration)
