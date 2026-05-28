@@ -406,8 +406,25 @@ images/
   "location": "City Name",          // NEW: Location field
   "notes": "Biography text...",     // NEW: Notes/biography field
   "role": "saint",                  // NEW: Special role marker
-  "spouse": { /* spouse data */ },
-  "children": [ /* children */ ]
+  
+  // UPDATED: Multiple spouses support (May 28, 2026)
+  "spouses": [                      // NEW: Array of spouses (replaces single "spouse")
+    {
+      "name": "Spouse Name",
+      "id": "spouse-id",
+      "gender": "F",
+      "birth": "YYYY-MM-DD",
+      "death": "YYYY-MM-DD",
+      "photo": "path/to/photo.jpg",
+      "children": [                 // NEW: Children nested under each spouse
+        { /* child data */ }
+      ]
+    }
+  ]
+  
+  // LEGACY: Old single-spouse format (still supported via backward compatibility)
+  // "spouse": { /* spouse data */ },
+  // "children": [ /* children */ ]
 }
 ```
 
@@ -471,6 +488,78 @@ function getFrameImage(d) {
 - ✅ **Canvas:** Watermark crest, vignette overlay, corner ornaments
 - ✅ **Spacing:** Organic breathing room (increased vertical/horizontal)
 - ✅ **Icons:** Removed decorative FontAwesome, kept functional only
+
+### Multiple Spouses Support (May 28, 2026)
+- ✅ **Feature Complete:** Full support for people with 2-3 spouses
+- ✅ **Data Structure:** Changed from `spouse` (single object) → `spouses` (array)
+- ✅ **Maternal Lineage:** Children nested under each spouse for accurate attribution
+- ✅ **Visual Layout:** Spouses positioned side-by-side horizontally around person
+- ✅ **Spouse Links:** Separate gold dotted lines to each spouse
+- ✅ **Parent-Child Links:** Children descend from midpoint between father and specific mother
+- ✅ **Info Panel - Spouses:** Lists all spouses with child counts
+- ✅ **Info Panel - Children:** Grouped by mother with subheadings
+- ✅ **Info Panel - Parents:** Correctly shows both father and biological mother
+- ✅ **Expand/Collapse:** Works correctly with children from multiple spouses
+- ✅ **Backward Compatibility:** Old single-spouse format automatically converted
+
+**Example Implementation:** Mishri Nath Deora
+- **First Wife:** Naini Devi (1952-1965) → 1 child: Narayan Nath Deora
+- **Second Wife:** Soni Devi (1951-2025) → 5 children: Koyali Devi, Durga Devi, Bhagvati Devi, Chaitan Nath Deora, Rakesh Nath Deora
+
+**New Data Format:**
+```json
+{
+  "name": "Mishri Nath Deora",
+  "id": "p15",
+  "gender": "M",
+  "spouses": [
+    {
+      "name": "Naini Devi",
+      "id": "p15w1",
+      "gender": "F",
+      "birth": "1952",
+      "death": "1965",
+      "children": [
+        {
+          "name": "Narayan Nath Deora",
+          "id": "p33",
+          "gender": "M",
+          "birth": "1962-06-12"
+        }
+      ]
+    },
+    {
+      "name": "Soni Devi",
+      "id": "p15w2",
+      "gender": "F",
+      "birth": "1951",
+      "death": "2025",
+      "children": [
+        { "name": "Koyali Devi", "id": "p34" },
+        { "name": "Durga Devi", "id": "p35" },
+        { "name": "Bhagvati Devi", "id": "p36" },
+        { "name": "Chaitan Nath Deora", "id": "p37" },
+        { "name": "Rakesh Nath Deora", "id": "p38" }
+      ]
+    }
+  ]
+}
+```
+
+**Technical Implementation:**
+- **normalizeSpouses():** Backward compatibility helper converts old format on-the-fly
+- **Flattening Logic:** Loops through spouses array, adds spouseIndex for positioning
+- **Position Calculation:** Centers person with spouses distributed on both sides
+  - 1 spouse: legacy behavior (person left, spouse right)
+  - 2 spouses: [Spouse1 — Person — Spouse2]
+  - 3+ spouses: distributed evenly around person
+- **Link Rendering:** Finds specific mother by matching child.id in spouse.children array
+- **Info Panel:** Shows spouses with child counts, groups children by mother
+
+**Known Limitations:**
+- Maximum 3 spouses recommended (layout gets very wide beyond 3)
+- Horizontal space increases significantly with multiple spouses
+- Mobile view may need special handling for 3+ spouses
 
 ## Recent Design Evolution
 
@@ -690,6 +779,6 @@ function getFrameImage(d) {
 
 ---
 
-**Last Updated:** May 27, 2026
-**Version:** 3.0 - Deora Parivar Edition
-**Status:** Fully customized with family crest, ornate frames, saints system, notes, and mobile optimization. Production-ready for deployment.
+**Last Updated:** May 28, 2026
+**Version:** 3.1 - Deora Parivar Edition
+**Status:** Fully customized with family crest, ornate frames, saints system, notes, mobile optimization, and multiple spouses support. Production-ready for deployment.
