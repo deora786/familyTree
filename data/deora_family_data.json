@@ -140,126 +140,130 @@
                       "photo": null,
                       "location": "Kanuja",
                       "notes": "Lived a simple life with no worries in mind\nSamadhi: Kathola, Kanuja",
-                      "spouse": {
-                        "name": "Naini Devi",
-                        "id": "p15w1",
-                        "gender": "F",
-                        "birth": "1952",
-                        "death": "1965",
-                        "location": null,
-                        "photo": null,
-                        "notes": null
-                      },
-                      "spouse2": {
-                        "name": "Soni Devi",
-                        "id": "p15w2",
-                        "gender": "F",
-                        "birth": "1951",
-                        "death": "2025",
-                        "location": null,
-                        "photo": null,
-                        "notes": null
-                      },
-                      "children": [
+                      "spouses": [
                         {
-                          "name": "Narayan Nath Deora",
-                          "id": "p33",
-                          "gender": "M",
-                          "birth": "1962-06-12",
-                          "death": null,
-                          "photo": null,
-                          "location": "Beawar",
-                          "notes": null,
-                          "spouse": {
-                            "name": "Sukhiya Devi",
-                            "id": "p33w",
-                            "gender": "F",
-                            "birth": "1965",
-                            "death": null,
-                            "location": null,
-                            "photo": null,
-                            "notes": null
-                          }
-                        },
-                        {
-                          "name": "Koyali Devi",
-                          "id": "p34",
+                          "name": "Naini Devi",
+                          "id": "p15w1",
                           "gender": "F",
-                          "birth": "1968",
-                          "death": null,
+                          "birth": "1952",
+                          "death": "1965",
+                          "location": null,
                           "photo": null,
-                          "location": "Udeka",
                           "notes": null,
-                          "spouse": {
-                            "name": "Gopi Nath Ji",
-                            "id": "p34h",
-                            "gender": "M",
-                            "birth": "1964",
-                            "death": null,
-                            "location": "Udeka",
-                            "photo": null,
-                            "notes": null
-                          }
+                          "children": [
+                            {
+                              "name": "Narayan Nath Deora",
+                              "id": "p33",
+                              "gender": "M",
+                              "birth": "1962-06-12",
+                              "death": null,
+                              "photo": null,
+                              "location": "Beawar",
+                              "notes": null,
+                              "spouse": {
+                                "name": "Sukhiya Devi",
+                                "id": "p33w",
+                                "gender": "F",
+                                "birth": "1965",
+                                "death": null,
+                                "location": null,
+                                "photo": null,
+                                "notes": null
+                              }
+                            }
+                          ]
                         },
                         {
-                          "name": "Durga Devi",
-                          "id": "p35",
+                          "name": "Soni Devi",
+                          "id": "p15w2",
                           "gender": "F",
-                          "birth": "1971",
-                          "death": "2019",
-                          "photo": null,
-                          "location": "Babra",
-                          "notes": null,
-                          "spouse": {
-                            "name": "Ramesh Nath Ji",
-                            "id": "p35h",
-                            "gender": "M",
-                            "birth": "1965",
-                            "death": null,
-                            "location": "Babra",
-                            "photo": null,
-                            "notes": null
-                          }
-                        },
-                        {
-                          "name": "Bhagvati Devi",
-                          "id": "p36",
-                          "gender": "F",
-                          "birth": "1973",
-                          "death": null,
-                          "photo": null,
-                          "location": "Khokhri",
-                          "notes": null,
-                          "spouse": {
-                            "name": "Multi Nath Ji",
-                            "id": "p36h",
-                            "gender": "M",
-                            "birth": "1970",
-                            "death": null,
-                            "location": "Khokhri",
-                            "photo": null,
-                            "notes": null
-                          }
-                        },
-                        {
-                          "name": "Chaitan Nath Deora",
-                          "id": "p37",
-                          "gender": "M",
-                          "birth": "1983",
+                          "birth": "1951",
                           "death": "2025",
+                          "location": null,
                           "photo": null,
-                          "location": "Kanuja",
-                          "notes": "Samadhi: Kathola, Kanuja"
-                        },
-                        {
-                          "name": "Rakesh Nath Deora",
-                          "id": "p38",
-                          "gender": "M",
-                          "birth": "1989",
-                          "death": null,
-                          "photo": null,
-                          "location": "Beawar",
-                          "notes": null
+                          "notes": null,
+                          "children": [
+                            {
+                              "name": "Koyali Devi",
+                              "id": "p34",
+                              "gender": "F",
+                              "birth": "1968",
+                              "death": null,
+                              "photo": null,
+                              "location": "Udeka",
+                              "notes": null,
+                              "spouse": {
+                                "name": "Gopi Nath Ji",
+                                "id": "p34h",
+                                "gender": "M",
+                                "birth": "1964",
+                                "death": null,
+                                "location": "Udeka",
+                                "photo": null,
+                                "notes": null
+                              }
+                            },
+                            {
+                              "name": "Durga Devi",
+                              "id": "p35",
+                              "gender": "F",
+                              "birth": "1971",
+                              "death": "2019",
+                              "photo": null,
+                              "location": "Babra",
+                              "notes": null,
+                              "spouse": {
+                                "name": "Ramesh Nath Ji",
+                                "id": "p35h",
+                                "gender": "M",
+                                "birth": "1965",
+                                "death": null,
+                                "location": "Babra",
+                                "photo": null,
+                                "notes": null
+                              }
+                            },
+                            {
+                              "name": "Bhagvati Devi",
+                              "id": "p36",
+                              "gender": "F",
+                              "birth": "1973",
+                              "death": null,
+                              "photo": null,
+                              "location": "Khokhri",
+                              "notes": null,
+                              "spouse": {
+                                "name": "Multi Nath Ji",
+                                "id": "p36h",
+                                "gender": "M",
+                                "birth": "1970",
+                                "death": null,
+                                "location": "Khokhri",
+                                "photo": null,
+                                "notes": null
+                              }
+                            },
+                            {
+                              "name": "Chaitan Nath Deora",
+                              "id": "p37",
+                              "gender": "M",
+                              "birth": "1983",
+                              "death": "2025",
+                              "photo": null,
+                              "location": "Kanuja",
+                              "notes": "Samadhi: Kathola, Kanuja"
+                            },
+                            {
+                              "name": "Rakesh Nath Deora",
+                              "id": "p38",
+                              "gender": "M",
+                              "birth": "1989",
+                              "death": null,
+                              "photo": null,
+                              "location": "Beawar",
+                              "notes": null
+                            }
+                          ]
                         }
                       ]
                     },
