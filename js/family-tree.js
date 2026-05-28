@@ -972,7 +972,7 @@ function showPersonInfo(person) {
     if (parentData) {
       parentsSection.style.display = 'block';
 
-      // Add biological parent
+      // Add biological parent (father)
       const li = document.createElement('li');
       li.textContent = parentData.name;
       li.dataset.personId = parentData.id;
@@ -982,8 +982,29 @@ function showPersonInfo(person) {
       });
       parentsList.appendChild(li);
 
-      // Add other biological parent (parent's spouse)
-      if (parentData.spouse) {
+      // Add biological mother - find which spouse is the mother of this child
+      // New format: multiple spouses
+      if (parentData.spouses && parentData.spouses.length > 0) {
+        const mother = parentData.spouses.find(spouse =>
+          spouse.children && spouse.children.some(c => c.id === person.id)
+        );
+
+        if (mother) {
+          const motherData = flatData.find(n => n.id === mother.id);
+          if (motherData) {
+            const li2 = document.createElement('li');
+            li2.textContent = motherData.name;
+            li2.dataset.personId = motherData.id;
+            li2.addEventListener('click', () => {
+              closePanel();
+              setTimeout(() => showPersonInfo(motherData), 100);
+            });
+            parentsList.appendChild(li2);
+          }
+        }
+      }
+      // Legacy format: single spouse
+      else if (parentData.spouse) {
         const spouseData = flatData.find(n => n.id === parentData.spouse.id);
         if (spouseData) {
           const li2 = document.createElement('li');
