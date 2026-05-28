@@ -103,19 +103,27 @@
     font-size: 0.7rem;
   }
 
-  /* Info Panel - Full screen on mobile */
+  /* Info Panel - Full screen on mobile (below header) */
   .info-panel {
     width: 100%;
-    top: 0;
-    bottom: auto;
-    max-height: 90vh;
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    top: 60px; /* Below fixed header */
+    bottom: 0;
+    max-height: calc(100vh - 60px);
+    border-radius: 0; /* No rounded corners, fills screen */
     transform: translateY(100%);
+    z-index: calc(var(--z-panel) + 1); /* Above tree, below header */
   }
 
   .info-panel.open {
     transform: translateY(0);
-    bottom: 0;
+  }
+
+  /* Info panel header should be visible and sticky */
+  .info-panel-header {
+    position: sticky;
+    top: 0;
+    background: var(--card-bg);
+    z-index: 20;
   }
 
   .person-photo-large img {
@@ -141,6 +149,11 @@
   .notes-content {
     font-size: 0.85rem;
     line-height: 1.6;
+  }
+
+  /* Overlay should not cover header on mobile */
+  .overlay {
+    top: 60px; /* Start below header */
   }
 
   /* Larger tap targets for mobile */

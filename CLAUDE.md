@@ -100,19 +100,37 @@ Header: Deep royal gradient with aged gold border
 
 ```
 /
-├── index.html              # Main HTML entry point
+├── index.html                    # Main HTML entry point
 ├── css/
-│   ├── styles.css          # Royal design system, main styles
-│   └── mobile.css          # Responsive breakpoints (<768px)
+│   ├── styles.css                # Royal design system, main styles (~1300 lines)
+│   └── mobile.css                # Responsive breakpoints (<768px, <600px)
 ├── js/
-│   └── family-tree.js      # D3.js visualization logic (~900 lines)
+│   └── family-tree.js            # D3.js visualization logic (~900 lines)
 ├── data/
-│   └── family-data.json    # Hierarchical family data
+│   ├── family-data.json          # Current Deora family data
+│   ├── deora_family_data.json    # Backup of family data
+│   └── sample_family-data.json   # Sample data for testing
 ├── images/
-│   └── photos/             # Family member photos (optional)
-├── README.md               # User documentation
-├── CLAUDE.md               # This file - project context
-└── .gitignore              # Git ignore rules
+│   ├── crest/
+│   │   ├── deora-crest-transparent.png  # Family crest (transparency fixed)
+│   │   └── deora-crest.png              # Original crest
+│   ├── frames/
+│   │   ├── saint-frame.png       # Ornate Nath Ji frame (100×100px)
+│   │   ├── male-frame.png        # Royal male frame (100×100px)
+│   │   └── female-frame.png      # Royal female frame (100×100px)
+│   ├── defaults/
+│   │   ├── male-default.png      # Default male portrait (90×90px)
+│   │   ├── female-default.png    # Default female portrait (90×90px)
+│   │   └── NathJiSaint-default.png  # Saint default
+│   └── photos/
+│       └── [individual-photos]   # Family member photos
+├── remove_checkerboard.py        # Python script to fix PNG transparency
+├── README.md                     # User documentation (generic)
+├── CLAUDE.md                     # This file - project context (Deora-specific)
+├── FRAME_SETUP.md                # Guide for frames and portraits
+├── MOBILE_TESTING.md             # Mobile testing checklist
+├── GITHUB_PAGES_CHECKLIST.md     # Deployment checklist
+└── .gitignore                    # Git ignore rules
 ```
 
 ## Key Features Implemented
@@ -143,8 +161,12 @@ Header: Deep royal gradient with aged gold border
 ### 4. Person Info Panel
 - **Trigger:** Click any node
 - **Content:** 
-  - Large photo (200px) or placeholder
-  - Full name, dates, generation number
+  - Large photo (200px desktop, 150px tablet, 120px mobile)
+  - Full name, dates, generation number, location
+  - **Notes/Biography section:** (NEW) Displays person.notes field
+    - Life achievements, Samadhi locations, historical significance
+    - Gold-bordered styling with serif typography
+    - Auto-hides when no notes present
   - Spouse (clickable to navigate)
   - Children list (clickable)
   - Parents (clickable)
@@ -318,6 +340,137 @@ const config = {
 3. **Static Data:** No backend, changes require editing JSON directly
 4. **Browser-Only:** No server-side rendering or SEO optimization
 5. **Large Trees:** Performance may degrade beyond ~500 people (not yet tested)
+
+## Recent Updates (May 2026)
+
+### Deora Family-Specific Customizations (May 27, 2026)
+- ✅ **Family Crest:** Added Deora family crest to header and backdrop
+  - Lion, Swan, Nath Ji symbols with "Aadesh Aadesh" motto
+  - Header: 50px crest (40px tablet, 35px mobile)
+  - Backdrop: Large faded watermark (600px, 8% opacity)
+  - Transparency fixed via Python script (removed checkered background)
+- ✅ **Title Update:** Changed "Family Tree" → "Deora Parivar"
+- ✅ **Ornate Frames:** Three frame types overlay photos
+  - Saint frame: For saints/Nath Ji Maharaj (root + role:"saint")
+  - Male frame: For all male family members
+  - Female frame: For all female family members
+  - 100×100px PNG frames overlay 80×80px photos
+- ✅ **Default Portraits:** Gender-specific defaults when photo is null
+  - Traditional Indian miniature painting aesthetic
+  - Male and female default portraits (90×90px)
+- ✅ **Saints System:** `role: "saint"` field marks special ancestors
+  - Joravar Singh Deora (founder, Generation 1)
+  - Aiji Kahn Nath Deora (Asarlai Dhooni, Generation 5)
+  - Aiji Uday Nath Deora (Asan Jilelav, Generation 5)
+- ✅ **Notes/Biography Section:** Added to info panel
+  - Displays person.notes field (biographical information)
+  - Samadhi locations, life achievements, historical significance
+  - Gold-bordered styling, serif typography
+  - Auto-hides when no notes present
+- ✅ **Mobile Optimization:** Comprehensive responsive improvements
+  - Touch-optimized (44px minimum tap targets)
+  - Responsive breakpoints: 768px, 600px, landscape
+  - Scaled crest, photos, frames for mobile
+  - Full-screen info panel on mobile
+  - Backdrop crest more subtle on small screens
+  - Corner ornaments hidden on mobile
+  - Created MOBILE_TESTING.md checklist
+
+### Image Assets Structure
+```
+images/
+├── crest/
+│   ├── deora-crest-transparent.png  # Header crest (transparency fixed)
+│   └── deora-crest.png              # Original (has checkered bg)
+├── frames/
+│   ├── saint-frame.png              # Ornate Nath Ji frame (100×100px)
+│   ├── male-frame.png               # Royal male frame (100×100px)
+│   └── female-frame.png             # Royal female frame (100×100px)
+├── defaults/
+│   ├── male-default.png             # Default male portrait (90×90px)
+│   ├── female-default.png           # Default female portrait (90×90px)
+│   └── NathJiSaint-default.png      # Special saint default
+└── photos/
+    └── [individual-photos.jpg]      # Family member photos
+```
+
+### Data Structure Updates
+```json
+{
+  "name": "Person Name",
+  "id": "unique-id",
+  "gender": "M",
+  "birth": "YYYY-MM-DD",
+  "death": "YYYY-MM-DD",
+  "photo": "path/to/photo.jpg",
+  "location": "City Name",          // NEW: Location field
+  "notes": "Biography text...",     // NEW: Notes/biography field
+  "role": "saint",                  // NEW: Special role marker
+  "spouse": { /* spouse data */ },
+  "children": [ /* children */ ]
+}
+```
+
+### Configuration Updates (js/family-tree.js)
+```javascript
+const config = {
+  nodeWidth: 130,              // Increased from 120
+  nodeHeight: 150,             // Increased from 140
+  verticalSpacing: 220,        // Increased from 180 (+22%)
+  horizontalSpacing: 80,       // Increased from 60 (+33%)
+  spouseSpacing: 180,          // Increased from 150 (+20%)
+  transitionDuration: 500,
+  
+  // NEW: Frame image paths
+  frames: {
+    saint: 'images/frames/saint-frame.png',
+    male: 'images/frames/male-frame.png',
+    female: 'images/frames/female-frame.png'
+  },
+  
+  // NEW: Default portrait paths
+  defaults: {
+    male: 'images/defaults/male-default.png',
+    female: 'images/defaults/female-default.png'
+  }
+};
+```
+
+### Helper Functions Added
+```javascript
+// Get photo or gender-appropriate default
+function getPhotoOrDefault(node) {
+  if (node.photo) return node.photo;
+  return node.gender === 'M' ? config.defaults.male : config.defaults.female;
+}
+
+// Get frame based on role (saint vs regular)
+function getFrameImage(d) {
+  const isSaint = d.node.role === 'saint';
+  if (isSaint) return config.frames.saint;
+  return d.node.gender === 'M' ? config.frames.male : config.frames.female;
+}
+```
+
+### Photo & Frame Specifications
+- **Desktop Photos:** 80×80px (reduced from 90px to fit frames)
+- **Desktop Frames:** 100×100px overlay
+- **Tablet Photos:** 60×60px (CSS media query)
+- **Tablet Frames:** 70×70px
+- **Mobile Photos:** 50×50px
+- **Mobile Frames:** 60×60px
+- **Frame Opacity:** 0.95 normal, 1.0 on hover
+- **Blend Mode:** `mix-blend-mode: multiply` for natural integration
+
+### Manuscript Transformation Complete (May 2026)
+- ✅ **Header:** Parchment background, centered layout, elegant separator
+- ✅ **Border-Radius:** Sharp archival corners (0-2px)
+- ✅ **Hover Effects:** Removed all scale/transform, replaced with glow
+- ✅ **Typography:** 70%+ serif coverage (dates, relationships, notes)
+- ✅ **Tree Lines:** Delicate 1.5px ink strokes, dotted spouse links
+- ✅ **Canvas:** Watermark crest, vignette overlay, corner ornaments
+- ✅ **Spacing:** Organic breathing room (increased vertical/horizontal)
+- ✅ **Icons:** Removed decorative FontAwesome, kept functional only
 
 ## Recent Design Evolution
 
@@ -538,5 +691,5 @@ const config = {
 ---
 
 **Last Updated:** May 27, 2026
-**Version:** 2.0 - Premium Royal Genealogy Edition
-**Status:** Premium redesign complete, ready for deployment
+**Version:** 3.0 - Deora Parivar Edition
+**Status:** Fully customized with family crest, ornate frames, saints system, notes, and mobile optimization. Production-ready for deployment.

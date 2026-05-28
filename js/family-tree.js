@@ -66,9 +66,14 @@ function initializeTree() {
 
 // Reset view to initial state
 function resetView() {
+  // Responsive initial scale based on screen width
+  const isMobile = window.innerWidth <= 768;
+  const initialScale = isMobile ? 0.5 : 0.7; // Smaller scale on mobile to see more
+  const initialY = isMobile ? 100 : 80; // More space for mobile header
+
   const initialTransform = d3.zoomIdentity
-    .translate(width / 2, 80)
-    .scale(0.7);
+    .translate(width / 2, initialY)
+    .scale(initialScale);
 
   svg.transition()
     .duration(config.transitionDuration)
@@ -139,7 +144,7 @@ function flattenData(node, generation = 1, parent = null) {
     const spouseData = {
       ...node.spouse,
       generation,
-      parent,
+      parent: null, // Spouses don't have parents in the tree (prevents showing in-laws)
       isSpouse: true,
       spouseOf: node.id
     };
@@ -759,17 +764,19 @@ function showPersonInfo(person) {
     childrenSection.style.display = 'none';
   }
 
-  // Parents
+  // Parents - Only show for biological children, not spouses
   const parentsSection = document.getElementById('parents-section');
   const parentsList = document.getElementById('parents-list');
   parentsList.innerHTML = '';
 
+  // Only show parents if this person has a parent field (is a biological child)
+  // Spouses are embedded in the tree but don't have biological parents in the data
   if (person.parent) {
     const parentData = flatData.find(n => n.id === person.parent);
     if (parentData) {
       parentsSection.style.display = 'block';
 
-      // Add parent
+      // Add biological parent
       const li = document.createElement('li');
       li.textContent = parentData.name;
       li.dataset.personId = parentData.id;
@@ -779,7 +786,7 @@ function showPersonInfo(person) {
       });
       parentsList.appendChild(li);
 
-      // Add parent's spouse if exists
+      // Add other biological parent (parent's spouse)
       if (parentData.spouse) {
         const spouseData = flatData.find(n => n.id === parentData.spouse.id);
         if (spouseData) {
@@ -797,6 +804,8 @@ function showPersonInfo(person) {
       parentsSection.style.display = 'none';
     }
   } else {
+    // No parent field means this is either root or a spouse
+    // Spouses' parents are not in the family tree data
     parentsSection.style.display = 'none';
   }
 

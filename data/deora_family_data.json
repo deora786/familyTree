@@ -3,19 +3,19 @@
   "id": "p1",
   "gender": "M",
   "birth": "1820",
-  "death": null,
+  "death": "1900",
   "photo": null,
   "location": "Kanuja",
-  "notes": "Left Sirohi Darbar. Became Nath Ji Maharaj of Jaiti Dhooni. Later moved to Kanuja where he founded the Deora Parivar. Samadhi Sthal: Katola, Kanuja.",
-  "role": "saint",
+  "notes": "1. Left Sirohi Darbar, Became Nath Ji Maharaj of Jaiti Dhooni\n2. Left Jaiti and Moved to Kanuja where he started a family which became Deora Parivar\n3. Samadhi Sthal: Katola, Kanuja",
+  "role": "Saint",
   "spouse": {
     "name": "Mrs. Joravar Singh",
     "id": "p1w",
     "gender": "F",
     "birth": null,
-    "death": null,
+    "death": "1900",
+    "location": "Jaiti",
     "photo": null,
-    "location": "Kanuja",
     "notes": null
   },
   "children": [
@@ -24,7 +24,7 @@
       "id": "p2",
       "gender": "M",
       "birth": "1853",
-      "death": null,
+      "death": "1925",
       "photo": null,
       "location": "Kanuja",
       "notes": "Samadhi: Unknown",
@@ -33,9 +33,9 @@
         "id": "p2w",
         "gender": "F",
         "birth": null,
-        "death": null,
+        "death": "1925",
+        "location": null,
         "photo": null,
-        "location": "Kanuja",
         "notes": null
       },
       "children": [
@@ -44,7 +44,7 @@
           "id": "p3",
           "gender": "M",
           "birth": "1874",
-          "death": null,
+          "death": "1950",
           "photo": null,
           "location": "Kanuja",
           "notes": "Samadhi: Dharmtalai, Kanuja",
@@ -53,9 +53,9 @@
             "id": "p3w",
             "gender": "F",
             "birth": null,
-            "death": null,
+            "death": "1950",
+            "location": null,
             "photo": null,
-            "location": "Kanuja",
             "notes": null
           },
           "children": [
@@ -64,7 +64,7 @@
               "id": "p4",
               "gender": "M",
               "birth": "1895",
-              "death": null,
+              "death": "1960",
               "photo": null,
               "location": "Kanuja",
               "notes": "Samadhi: Asarlai Mandir",
@@ -73,9 +73,9 @@
                 "id": "p4w",
                 "gender": "F",
                 "birth": null,
-                "death": null,
+                "death": "1960",
+                "location": null,
                 "photo": null,
-                "location": "Kanuja",
                 "notes": null
               },
               "children": [
@@ -87,8 +87,8 @@
                   "death": "1953",
                   "photo": null,
                   "location": "Asarlai",
-                  "notes": "Was Bal-brahmchari, never married. Was Ajiji Maharaj of Asarlai Dhooni. Samadhi: Asarlai Mandir.",
-                  "role": "saint"
+                  "notes": "1. Was Bal-brahmchari and never got married\n2. Was Ajiji Maharaj of Asarlai Dhooni\n3. Samadhi: Asrlai Mandir",
+                  "role": "Saint"
                 },
                 {
                   "name": "Aiji Uday Nath Deora",
@@ -98,8 +98,8 @@
                   "death": "1947",
                   "photo": null,
                   "location": "Asan Jilelav",
-                  "notes": "Was Aiji of Asan Jilelav. Samadhi: Asan Jilelav.",
-                  "role": "saint"
+                  "notes": "1. Was Aiji of Asan Jilelav\n2. Samadhi: Asan Jilelav",
+                  "role": "Saint"
                 },
                 {
                   "name": "Sanjay Nath Deora",
@@ -115,9 +115,9 @@
                     "id": "p9w",
                     "gender": "F",
                     "birth": "1915",
-                    "death": null,
+                    "death": "2010",
+                    "location": null,
                     "photo": null,
-                    "location": "Kanuja",
                     "notes": null
                   },
                   "children": [
@@ -126,10 +126,10 @@
                       "id": "p13",
                       "gender": "M",
                       "birth": "1938",
-                      "death": null,
+                      "death": "1944",
                       "photo": null,
                       "location": "Kanuja",
-                      "notes": "Died in childhood by falling into an open well (Shiv Sagar) in front of Shiv Mandir."
+                      "notes": "Died in childhood by falling in a open well(Shiv Sagar) in front of Shiv Mandir"
                     },
                     {
                       "name": "Mishri Nath Deora",
@@ -139,15 +139,15 @@
                       "death": "2023",
                       "photo": null,
                       "location": "Kanuja",
-                      "notes": "Lived a simple life with no worries in mind. Married twice: first to Naini Devi, then to Soni Devi. Samadhi: Kathola, Kanuja.",
+                      "notes": "Lived a simple life with no worries in mind\nSamadhi: Kathola, Kanuja",
                       "spouse": {
                         "name": "Naini Devi",
                         "id": "p15w1",
                         "gender": "F",
                         "birth": "1952",
-                        "death": null,
+                        "death": "1965",
+                        "location": null,
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "spouse2": {
@@ -155,9 +155,9 @@
                         "id": "p15w2",
                         "gender": "F",
                         "birth": "1951",
-                        "death": null,
+                        "death": "2025",
+                        "location": null,
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "children": [
@@ -176,8 +176,8 @@
                             "gender": "F",
                             "birth": "1965",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Beawar",
                             "notes": null
                           }
                         },
@@ -196,8 +196,8 @@
                             "gender": "M",
                             "birth": "1964",
                             "death": null,
-                            "photo": null,
                             "location": "Udeka",
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -216,8 +216,8 @@
                             "gender": "M",
                             "birth": "1965",
                             "death": null,
-                            "photo": null,
                             "location": "Babra",
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -236,8 +236,8 @@
                             "gender": "M",
                             "birth": "1970",
                             "death": null,
-                            "photo": null,
                             "location": "Khokhri",
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -249,7 +249,7 @@
                           "death": "2025",
                           "photo": null,
                           "location": "Kanuja",
-                          "notes": "Samadhi: Kathola, Kanuja."
+                          "notes": "Samadhi: Kathola, Kanuja"
                         },
                         {
                           "name": "Rakesh Nath Deora",
@@ -271,15 +271,15 @@
                       "death": "2022",
                       "photo": null,
                       "location": "Kurki",
-                      "notes": "Considered a strong woman.",
+                      "notes": "Considered as a Strong woman",
                       "spouse": {
                         "name": "Lal Nath Ji",
                         "id": "p16h",
                         "gender": "M",
                         "birth": "1938",
-                        "death": null,
-                        "photo": null,
+                        "death": "2008",
                         "location": "Kurki",
+                        "photo": null,
                         "notes": null
                       },
                       "children": [
@@ -298,8 +298,8 @@
                             "gender": "F",
                             "birth": "1965",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Kurki",
                             "notes": null
                           }
                         }
@@ -313,15 +313,15 @@
                       "death": "2002",
                       "photo": null,
                       "location": "Kanuja",
-                      "notes": "Was very kind as well as very dominant when needed. Samadhi: Kathola, Kanuja.",
+                      "notes": "Was very kind as well as very dominant when needed\nSamadhi: Kathola, Kanuja",
                       "spouse": {
                         "name": "Shanti Devi",
                         "id": "p17w",
                         "gender": "F",
                         "birth": "1954",
                         "death": null,
+                        "location": null,
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "children": [
@@ -340,8 +340,8 @@
                             "gender": "M",
                             "birth": "1964",
                             "death": null,
-                            "photo": null,
                             "location": "Asan Jilelav",
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -353,15 +353,15 @@
                           "death": "2020-12-01",
                           "photo": null,
                           "location": "Kanuja",
-                          "notes": "Samadhi: Kathola, Kanuja.",
+                          "notes": "Samadhi: Kathola, Kanuja",
                           "spouse": {
                             "name": "Gyarsi Devi",
                             "id": "p40w",
                             "gender": "F",
                             "birth": "1975",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Kanuja",
                             "notes": null
                           }
                         },
@@ -380,8 +380,8 @@
                             "gender": "F",
                             "birth": "1978",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Bangalore",
                             "notes": null
                           }
                         },
@@ -400,8 +400,8 @@
                             "gender": "M",
                             "birth": "1970",
                             "death": null,
-                            "photo": null,
                             "location": "Bilara",
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -420,8 +420,8 @@
                             "gender": "F",
                             "birth": "1979",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Bangalore",
                             "notes": null
                           }
                         },
@@ -440,8 +440,8 @@
                             "gender": "M",
                             "birth": "1976",
                             "death": null,
-                            "photo": null,
                             "location": "Biratiya",
+                            "photo": null,
                             "notes": null
                           }
                         }
@@ -454,17 +454,17 @@
                   "id": "p10",
                   "gender": "M",
                   "birth": "1925",
-                  "death": null,
+                  "death": "1935",
                   "photo": null,
                   "location": "Kanuja",
-                  "notes": "Died young, unmarried."
+                  "notes": null
                 },
                 {
                   "name": "Jawan Nath Deora",
                   "id": "p11",
                   "gender": "M",
                   "birth": "1928",
-                  "death": null,
+                  "death": "1991",
                   "photo": null,
                   "location": "Kanuja",
                   "notes": "Samadhi: Dharmtalai Bida, Kanuja",
@@ -472,10 +472,10 @@
                     "name": "Kaisi Devi",
                     "id": "p11w",
                     "gender": "F",
-                    "birth": null,
-                    "death": null,
+                    "birth": "1934",
+                    "death": "2008",
+                    "location": null,
                     "photo": null,
-                    "location": "Kanuja",
                     "notes": null
                   },
                   "children": [
@@ -494,8 +494,8 @@
                         "gender": "M",
                         "birth": "1955",
                         "death": null,
-                        "photo": null,
                         "location": "Chandaval",
+                        "photo": null,
                         "notes": null
                       }
                     },
@@ -514,19 +514,19 @@
                         "gender": "F",
                         "birth": "1966",
                         "death": null,
+                        "location": null,
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "children": [
                         {
-                          "name": "Depu Devi",
+                          "name": "Dipu Devi",
                           "id": "p52",
                           "gender": "F",
                           "birth": "1984",
                           "death": null,
                           "photo": null,
-                          "location": "Barr",
+                          "location": "Unknown",
                           "notes": null,
                           "spouse": {
                             "name": "Unknown",
@@ -534,8 +534,8 @@
                             "gender": "M",
                             "birth": "1980",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Barr",
                             "notes": null
                           }
                         },
@@ -546,7 +546,7 @@
                           "birth": "1986",
                           "death": null,
                           "photo": null,
-                          "location": "Unknown",
+                          "location": null,
                           "notes": null,
                           "spouse": {
                             "name": "Unknown",
@@ -554,8 +554,8 @@
                             "gender": "M",
                             "birth": "1981",
                             "death": null,
-                            "photo": null,
                             "location": null,
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -566,7 +566,7 @@
                           "birth": "1989",
                           "death": null,
                           "photo": null,
-                          "location": "Unknown",
+                          "location": null,
                           "notes": null
                         },
                         {
@@ -596,8 +596,8 @@
                         "gender": "M",
                         "birth": "1958",
                         "death": null,
-                        "photo": null,
                         "location": "Samokhi",
+                        "photo": null,
                         "notes": null
                       }
                     },
@@ -616,8 +616,8 @@
                         "gender": "F",
                         "birth": "1970",
                         "death": null,
+                        "location": null,
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "children": [
@@ -646,8 +646,8 @@
                             "gender": "M",
                             "birth": "1998",
                             "death": null,
-                            "photo": null,
                             "location": null,
+                            "photo": null,
                             "notes": null
                           }
                         }
@@ -668,8 +668,8 @@
                         "gender": "F",
                         "birth": "1973",
                         "death": null,
+                        "location": null,
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "children": [
@@ -720,8 +720,8 @@
                         "gender": "M",
                         "birth": "1972",
                         "death": null,
-                        "photo": null,
                         "location": "Sojat",
+                        "photo": null,
                         "notes": null
                       }
                     }
@@ -732,7 +732,7 @@
                   "id": "p12",
                   "gender": "M",
                   "birth": "1932",
-                  "death": null,
+                  "death": "1996",
                   "photo": null,
                   "location": "Kanuja",
                   "notes": "Samadhi: Dharmtalai Bida, Kanuja",
@@ -740,10 +740,10 @@
                     "name": "Geeta Devi",
                     "id": "p12w",
                     "gender": "F",
-                    "birth": null,
-                    "death": null,
+                    "birth": "1942",
+                    "death": "2025",
+                    "location": null,
                     "photo": null,
-                    "location": "Kanuja",
                     "notes": null
                   },
                   "children": [
@@ -762,8 +762,8 @@
                         "gender": "M",
                         "birth": "1958",
                         "death": null,
-                        "photo": null,
                         "location": "Beawar",
+                        "photo": null,
                         "notes": null
                       }
                     },
@@ -775,15 +775,15 @@
                       "death": "2008",
                       "photo": null,
                       "location": "Beawar",
-                      "notes": "Samadhi: Dharmtalai Bida, Dharmtalai.",
+                      "notes": "Samadhi: Dharmtalai Bida, Dharmtalai",
                       "spouse": {
                         "name": "Mangi Devi",
                         "id": "p25w",
                         "gender": "F",
                         "birth": "1968",
                         "death": null,
+                        "location": null,
                         "photo": null,
-                        "location": "Beawar",
                         "notes": null
                       },
                       "children": [
@@ -802,8 +802,8 @@
                             "gender": "F",
                             "birth": "1986",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Kanuja",
                             "notes": null
                           }
                         },
@@ -822,8 +822,8 @@
                             "gender": "M",
                             "birth": "1984",
                             "death": null,
-                            "photo": null,
                             "location": "Suryanagar",
+                            "photo": null,
                             "notes": null
                           }
                         },
@@ -842,8 +842,8 @@
                             "gender": "F",
                             "birth": "1991",
                             "death": null,
+                            "location": "Asan Tiroliya",
                             "photo": null,
-                            "location": "Beawar",
                             "notes": null
                           }
                         }
@@ -864,8 +864,8 @@
                         "gender": "F",
                         "birth": "1973",
                         "death": null,
+                        "location": null,
                         "photo": null,
-                        "location": "Barr",
                         "notes": null
                       },
                       "children": [
@@ -884,8 +884,8 @@
                             "gender": "M",
                             "birth": "1986",
                             "death": null,
+                            "location": null,
                             "photo": null,
-                            "location": "Barr",
                             "notes": null
                           }
                         },
@@ -926,8 +926,8 @@
                         "gender": "M",
                         "birth": "1968",
                         "death": null,
-                        "photo": null,
                         "location": "Bhageda",
+                        "photo": null,
                         "notes": null
                       }
                     }
@@ -940,7 +940,7 @@
               "id": "p5",
               "gender": "M",
               "birth": "1893",
-              "death": null,
+              "death": "1955",
               "photo": null,
               "location": "Kanuja",
               "notes": "Samadhi: Dharmtalai, Kanuja",
@@ -949,9 +949,9 @@
                 "id": "p5w",
                 "gender": "F",
                 "birth": null,
-                "death": null,
+                "death": "1945",
+                "location": null,
                 "photo": null,
-                "location": "Kanuja",
                 "notes": null
               },
               "children": [
@@ -963,15 +963,15 @@
                   "death": "1957",
                   "photo": null,
                   "location": "Kanuja",
-                  "notes": "Died in a battle at Buti-Vas. Samadhi location: Pali (given by Hameer Nath Ji). Adopted Harji Nath Deora in 1946.",
+                  "notes": "1. Died in a battle at Buti-Vas\n2. Smadhi location Pali (Given by Hameer Nath Ji)",
                   "spouse": {
                     "name": "Bhanwari Devi",
                     "id": "p6w",
                     "gender": "F",
                     "birth": "1926",
                     "death": null,
+                    "location": "Udeka",
                     "photo": null,
-                    "location": "Kanuja",
                     "notes": null
                   },
                   "children": [
@@ -983,7 +983,7 @@
                       "death": "2024-11-04",
                       "photo": null,
                       "location": "Kanuja",
-                      "notes": "Adopted by Shiv Nath Deora and Bhanwari Devi in 1946. Biological son of Sanjay Nath Deora and Ganga Devi. Became Headmaster and contributed significantly in field of education. Known for his contributions by all. Samadhi: Dharmtalai, Kanuja.",
+                      "notes": "Adopted by Shiv Nath Deora and Bhanwari Devi in 1946\nBecame Headmaster and contrbuted significantly in field of education\nKnown for his contirubutions by all.\nSamadhi: Dharmtalai, Kanuja",
                       "bioFatherId": "p9",
                       "bioMotherId": "p9w",
                       "spouse": {
@@ -992,8 +992,8 @@
                         "gender": "F",
                         "birth": "1948",
                         "death": null,
+                        "location": "Khoriya",
                         "photo": null,
-                        "location": "Kanuja",
                         "notes": null
                       },
                       "children": [
@@ -1012,8 +1012,8 @@
                             "gender": "F",
                             "birth": "1967",
                             "death": null,
+                            "location": "Banjhakori",
                             "photo": null,
-                            "location": "Kanuja",
                             "notes": null
                           },
                           "children": [
@@ -1032,8 +1032,8 @@
                                 "gender": "F",
                                 "birth": "1989-07-08",
                                 "death": null,
+                                "location": null,
                                 "photo": null,
-                                "location": "Beawar",
                                 "notes": null
                               },
                               "children": [
@@ -1074,8 +1074,8 @@
                                 "gender": "F",
                                 "birth": "1990-12-08",
                                 "death": null,
+                                "location": "Haryana",
                                 "photo": null,
-                                "location": "Beawar",
                                 "notes": null
                               },
                               "children": [
@@ -1106,8 +1106,8 @@
                                 "gender": "F",
                                 "birth": "1998-04-19",
                                 "death": null,
+                                "location": "Jodhpur",
                                 "photo": null,
-                                "location": "Hyderabad",
                                 "notes": null
                               },
                               "children": [
@@ -1150,8 +1150,8 @@
                             "gender": "M",
                             "birth": "1958",
                             "death": null,
-                            "photo": null,
                             "location": "Dornari",
+                            "photo": null,
                             "notes": null
                           },
                           "children": [
@@ -1170,8 +1170,8 @@
                                 "gender": "M",
                                 "birth": "1978",
                                 "death": null,
-                                "photo": null,
                                 "location": "Jhunjhunu",
+                                "photo": null,
                                 "notes": null
                               }
                             },
@@ -1190,8 +1190,8 @@
                                 "gender": "M",
                                 "birth": "1984",
                                 "death": null,
+                                "location": "Jhunjhunu",
                                 "photo": null,
-                                "location": null,
                                 "notes": null
                               }
                             },
@@ -1232,8 +1232,8 @@
                             "gender": "F",
                             "birth": "1973",
                             "death": null,
+                            "location": "Kishangadh",
                             "photo": null,
-                            "location": "Ajmer",
                             "notes": null
                           },
                           "children": [
@@ -1252,8 +1252,8 @@
                                 "gender": "F",
                                 "birth": "1989",
                                 "death": null,
+                                "location": "Bharatpur",
                                 "photo": null,
-                                "location": "Jaipur",
                                 "notes": null
                               }
                             },
@@ -1272,8 +1272,8 @@
                                 "gender": "F",
                                 "birth": "1995",
                                 "death": null,
+                                "location": "Jaipur",
                                 "photo": null,
-                                "location": "Ajmer",
                                 "notes": null
                               },
                               "children": [
@@ -1316,8 +1316,8 @@
                             "gender": "F",
                             "birth": "1977",
                             "death": null,
+                            "location": "Chainpura",
                             "photo": null,
-                            "location": "Ajmer",
                             "notes": null
                           },
                           "children": [
@@ -1358,8 +1358,8 @@
                             "gender": "M",
                             "birth": "1970",
                             "death": null,
-                            "photo": null,
                             "location": "Beawar",
+                            "photo": null,
                             "notes": null
                           },
                           "children": [
