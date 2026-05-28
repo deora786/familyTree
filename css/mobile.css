@@ -103,15 +103,15 @@
     font-size: 0.7rem;
   }
 
-  /* Info Panel - Full screen on mobile (below header) */
+  /* Info Panel - Full screen on mobile (covers entire screen including header) */
   .info-panel {
     width: 100%;
-    top: 60px; /* Below fixed header */
+    top: 0; /* Full screen */
     bottom: 0;
-    max-height: calc(100vh - 60px);
+    max-height: 100vh;
     border-radius: 0; /* No rounded corners, fills screen */
     transform: translateY(100%);
-    z-index: calc(var(--z-panel) + 1); /* Above tree, below header */
+    z-index: 1040; /* Above header (header is 1030) */
   }
 
   .info-panel.open {
@@ -151,9 +151,10 @@
     line-height: 1.6;
   }
 
-  /* Overlay should not cover header on mobile */
+  /* Overlay covers full screen on mobile */
   .overlay {
-    top: 60px; /* Start below header */
+    top: 0; /* Full screen */
+    z-index: 1035; /* Between tree and info panel */
   }
 
   /* Larger tap targets for mobile */
