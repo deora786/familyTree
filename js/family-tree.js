@@ -139,7 +139,7 @@ function flattenData(node, generation = 1, parent = null) {
     const spouseData = {
       ...node.spouse,
       generation,
-      parent,
+      parent: null, // Spouses don't have parents in the tree (prevents showing in-laws)
       isSpouse: true,
       spouseOf: node.id
     };
