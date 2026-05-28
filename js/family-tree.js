@@ -852,15 +852,9 @@ function showPersonInfo(person) {
   const spouseList = document.getElementById('spouse-list');
   spouseList.innerHTML = '';
 
-  // Debug: Check what we have
-  console.log('Person:', person.name);
-  console.log('Has spouses?', person.spouses);
-  console.log('Has spouse?', person.spouse);
-
   // New format: multiple spouses
   if (person.spouses && person.spouses.length > 0) {
     spouseSection.style.display = 'block';
-    console.log('Showing', person.spouses.length, 'spouses');
 
     person.spouses.forEach(spouse => {
       const li = document.createElement('li');
