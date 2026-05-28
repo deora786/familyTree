@@ -32,6 +32,21 @@ const config = {
   }
 };
 
+// Get responsive photo sizes based on screen width
+function getPhotoSizes() {
+  const width = window.innerWidth;
+  if (width <= 600) {
+    // Mobile phones
+    return { photo: 50, frame: 60, offset: 5 };
+  } else if (width <= 768) {
+    // Tablets
+    return { photo: 60, frame: 70, offset: 5 };
+  } else {
+    // Desktop
+    return { photo: 80, frame: 100, offset: 10 };
+  }
+}
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
   initializeTree();
@@ -526,15 +541,22 @@ function renderNodes(positions) {
     }
   });
 
+  // Get responsive sizes
+  const sizes = getPhotoSizes();
+  const photoSize = sizes.photo;
+  const frameSize = sizes.frame;
+  const photoHalf = photoSize / 2;
+  const frameHalf = frameSize / 2;
+
   // Add photo or default portrait
   nodeGroups.append('image')
     .attr('class', d => d.node.death ? 'node-photo deceased' : 'node-photo')
-    .attr('x', -40) // Centered within frame
+    .attr('x', -photoHalf) // Centered within frame
     .attr('y', -60)
-    .attr('width', 80) // Slightly smaller to fit within ornate frames
-    .attr('height', 80)
+    .attr('width', photoSize) // Responsive sizing
+    .attr('height', photoSize)
     .attr('href', d => getPhotoOrDefault(d.node))
-    .attr('clip-path', 'circle(40px at 40px 40px)')
+    .attr('clip-path', `circle(${photoHalf}px at ${photoHalf}px ${photoHalf}px)`)
     .on('error', function(event, d) {
       // Fallback to gradient placeholder if default image fails
       d3.select(this).attr('href', getPlaceholderImage(d.node.name, d.node.gender));
@@ -543,10 +565,10 @@ function renderNodes(positions) {
   // Add ornate frame overlay (for root person or saints)
   nodeGroups.append('image')
     .attr('class', 'node-frame')
-    .attr('x', -50)
+    .attr('x', -frameHalf)
     .attr('y', -70)
-    .attr('width', 100)
-    .attr('height', 100)
+    .attr('width', frameSize) // Responsive sizing
+    .attr('height', frameSize)
     .attr('href', d => getFrameImage(d))
     .style('pointer-events', 'none') // Frame doesn't intercept clicks
     .style('opacity', 0.95)
@@ -1011,6 +1033,9 @@ function setupEventListeners() {
     height = container.clientHeight;
 
     svg.attr('width', width).attr('height', height);
+
+    // Re-render tree with updated photo sizes for new screen size
+    updateTree();
   }, 250));
 }
 
