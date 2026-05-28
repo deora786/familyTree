@@ -160,32 +160,43 @@ function normalizeSpouses(node) {
 
 // Flatten hierarchical data for easier processing
 function flattenData(node, generation = 1, parent = null) {
-  // Normalize spouse format (backward compatibility)
-  node = normalizeSpouses(node);
+  // Normalize spouse format (backward compatibility) - creates a NEW object, doesn't modify original
+  const normalizedNode = normalizeSpouses(node);
 
-  const isCollapsed = collapsedNodes.has(node.id);
+  const isCollapsed = collapsedNodes.has(normalizedNode.id);
+
+  // Collect all children (from all spouses) for expand/collapse functionality
+  let allChildren = [];
+  if (normalizedNode.spouses && normalizedNode.spouses.length > 0) {
+    normalizedNode.spouses.forEach(spouse => {
+      if (spouse.children && spouse.children.length > 0) {
+        allChildren = allChildren.concat(spouse.children);
+      }
+    });
+  } else if (normalizedNode.children) {
+    allChildren = normalizedNode.children;
+  }
 
   // Add node to flat array
   const nodeData = {
-    ...node,
+    ...normalizedNode,
     generation,
     parent,
-    _children: node.spouses ? null : node.children, // Store original children (for old format)
-    children: isCollapsed ? null : node.children,
+    _children: allChildren.length > 0 ? allChildren : null, // Store ALL children for expand/collapse
     isCollapsed: isCollapsed
   };
 
   flatData.push(nodeData);
 
   // Process multiple spouses (new format)
-  if (node.spouses && node.spouses.length > 0) {
-    node.spouses.forEach((spouse, spouseIndex) => {
+  if (normalizedNode.spouses && normalizedNode.spouses.length > 0) {
+    normalizedNode.spouses.forEach((spouse, spouseIndex) => {
       const spouseData = {
         ...spouse,
         generation,
         parent: null, // Spouses don't have parents in the tree (prevents showing in-laws)
         isSpouse: true,
-        spouseOf: node.id,
+        spouseOf: normalizedNode.id,
         spouseIndex: spouseIndex // Track position (0, 1, 2...) for horizontal offset
       };
       flatData.push(spouseData);
@@ -193,28 +204,16 @@ function flattenData(node, generation = 1, parent = null) {
       // Flatten this spouse's children recursively ONLY if not collapsed
       if (!isCollapsed && spouse.children && spouse.children.length > 0) {
         spouse.children.forEach(child => {
-          flattenData(child, generation + 1, node.id);
+          flattenData(child, generation + 1, normalizedNode.id);
         });
       }
     });
   }
-  // Legacy: Process old single-spouse format (already converted by normalizeSpouses)
-  else if (node.spouse) {
-    const spouseData = {
-      ...node.spouse,
-      generation,
-      parent: null,
-      isSpouse: true,
-      spouseOf: node.id,
-      spouseIndex: 0
-    };
-    flatData.push(spouseData);
-  }
-
-  // Process children recursively ONLY if not collapsed (legacy format)
-  if (node.children && node.children.length > 0 && !isCollapsed) {
-    node.children.forEach(child => {
-      flattenData(child, generation + 1, node.id);
+  // Legacy: Process old single-spouse format (only if NOT already converted to spouses array)
+  else if (normalizedNode.children && normalizedNode.children.length > 0 && !isCollapsed) {
+    // This handles legacy format after normalization
+    normalizedNode.children.forEach(child => {
+      flattenData(child, generation + 1, normalizedNode.id);
     });
   }
 }
@@ -853,9 +852,15 @@ function showPersonInfo(person) {
   const spouseList = document.getElementById('spouse-list');
   spouseList.innerHTML = '';
 
+  // Debug: Check what we have
+  console.log('Person:', person.name);
+  console.log('Has spouses?', person.spouses);
+  console.log('Has spouse?', person.spouse);
+
   // New format: multiple spouses
   if (person.spouses && person.spouses.length > 0) {
     spouseSection.style.display = 'block';
+    console.log('Showing', person.spouses.length, 'spouses');
 
     person.spouses.forEach(spouse => {
       const li = document.createElement('li');
