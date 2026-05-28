@@ -138,8 +138,31 @@ async function loadFamilyData() {
   }
 }
 
+// Helper: Normalize old single-spouse format to new multi-spouse array format
+function normalizeSpouses(node) {
+  // Convert old single-spouse format to new array format on-the-fly
+  if (node.spouse && !node.spouses) {
+    // Old format: migrate spouse + children to spouses array
+    return {
+      ...node,
+      spouses: [{
+        ...node.spouse,
+        children: node.children || []
+      }],
+      children: undefined, // Clear old children field (now under spouse)
+      spouse: undefined // Remove old spouse field
+    };
+  }
+
+  // Already new format or no spouse
+  return node;
+}
+
 // Flatten hierarchical data for easier processing
 function flattenData(node, generation = 1, parent = null) {
+  // Normalize spouse format (backward compatibility)
+  node = normalizeSpouses(node);
+
   const isCollapsed = collapsedNodes.has(node.id);
 
   // Add node to flat array
@@ -147,26 +170,48 @@ function flattenData(node, generation = 1, parent = null) {
     ...node,
     generation,
     parent,
-    _children: node.children, // Store original children
+    _children: node.spouses ? null : node.children, // Store original children (for old format)
     children: isCollapsed ? null : node.children,
     isCollapsed: isCollapsed
   };
 
   flatData.push(nodeData);
 
-  // Process spouse
-  if (node.spouse) {
+  // Process multiple spouses (new format)
+  if (node.spouses && node.spouses.length > 0) {
+    node.spouses.forEach((spouse, spouseIndex) => {
+      const spouseData = {
+        ...spouse,
+        generation,
+        parent: null, // Spouses don't have parents in the tree (prevents showing in-laws)
+        isSpouse: true,
+        spouseOf: node.id,
+        spouseIndex: spouseIndex // Track position (0, 1, 2...) for horizontal offset
+      };
+      flatData.push(spouseData);
+
+      // Flatten this spouse's children recursively ONLY if not collapsed
+      if (!isCollapsed && spouse.children && spouse.children.length > 0) {
+        spouse.children.forEach(child => {
+          flattenData(child, generation + 1, node.id);
+        });
+      }
+    });
+  }
+  // Legacy: Process old single-spouse format (already converted by normalizeSpouses)
+  else if (node.spouse) {
     const spouseData = {
       ...node.spouse,
       generation,
-      parent: null, // Spouses don't have parents in the tree (prevents showing in-laws)
+      parent: null,
       isSpouse: true,
-      spouseOf: node.id
+      spouseOf: node.id,
+      spouseIndex: 0
     };
     flatData.push(spouseData);
   }
 
-  // Process children recursively ONLY if not collapsed
+  // Process children recursively ONLY if not collapsed (legacy format)
   if (node.children && node.children.length > 0 && !isCollapsed) {
     node.children.forEach(child => {
       flattenData(child, generation + 1, node.id);
@@ -219,9 +264,11 @@ function calculatePositions() {
     let nodeWidths = [];
 
     regularNodes.forEach(node => {
-      const hasSpouse = spouses.some(s => s.spouseOf === node.id);
-      const width = config.nodeWidth + (hasSpouse ? config.spouseSpacing : 0);
-      nodeWidths.push({ node, width, hasSpouse });
+      const nodeSpouses = spouses.filter(s => s.spouseOf === node.id);
+      const spouseCount = nodeSpouses.length;
+      // Calculate width: person + (spouseCount * spacing)
+      const width = config.nodeWidth + (spouseCount * config.spouseSpacing);
+      nodeWidths.push({ node, width, spouseCount, nodeSpouses });
       totalWidth += width;
     });
 
@@ -231,21 +278,51 @@ function calculatePositions() {
     // Position regular nodes with proper spacing
     let currentX = -totalWidth / 2;
 
-    nodeWidths.forEach(({ node, width, hasSpouse }) => {
-      // Center position of the node (or node pair if spouse exists)
-      const nodeX = currentX + (hasSpouse ? config.nodeWidth / 2 : width / 2);
-      positions.set(node.id, { x: nodeX, y, node });
+    nodeWidths.forEach(({ node, width, spouseCount, nodeSpouses }) => {
+      if (spouseCount === 0) {
+        // No spouse: center the person
+        const nodeX = currentX + width / 2;
+        positions.set(node.id, { x: nodeX, y, node });
+      } else if (spouseCount === 1) {
+        // Single spouse: person on left, spouse on right (legacy behavior)
+        const nodeX = currentX + config.nodeWidth / 2;
+        positions.set(node.id, { x: nodeX, y, node });
+        positions.set(nodeSpouses[0].id, {
+          x: nodeX + config.spouseSpacing,
+          y: y,
+          node: nodeSpouses[0]
+        });
+      } else {
+        // Multiple spouses: center person, distribute spouses around
+        // For 2 spouses: [Spouse0 — Person — Spouse1]
+        const centerX = currentX + width / 2;
+        const personX = centerX;
+        positions.set(node.id, { x: personX, y, node });
 
-      // Position spouse if exists
-      if (hasSpouse) {
-        const spouse = spouses.find(s => s.spouseOf === node.id);
-        if (spouse) {
+        // Position spouses: distribute evenly on both sides
+        nodeSpouses.forEach((spouse, index) => {
+          let spouseX;
+          if (spouseCount === 2) {
+            // 2 spouses: one on left, one on right
+            spouseX = index === 0
+              ? personX - config.spouseSpacing
+              : personX + config.spouseSpacing;
+          } else {
+            // 3+ spouses: distribute around person
+            // Calculate offset from center
+            const offset = (index - Math.floor(spouseCount / 2)) * config.spouseSpacing;
+            const adjustedOffset = spouseCount % 2 === 0
+              ? offset + (config.spouseSpacing / 2)
+              : offset;
+            spouseX = personX + adjustedOffset;
+          }
+
           positions.set(spouse.id, {
-            x: nodeX + config.spouseSpacing,
+            x: spouseX,
             y: y,
             node: spouse
           });
-        }
+        });
       }
 
       // Move to next position
@@ -267,15 +344,30 @@ function renderLinks(positions) {
       const childPos = positions.get(node.id);
 
       if (parentPos && childPos && !node.isSpouse) {
-        // If parent has spouse, link from midpoint
-        const parentNode = flatData.find(n => n.id === node.parent);
-        const parentSpouse = flatData.find(n => n.spouseOf === node.parent);
+        // Find which spouse (mother) is the biological parent of this child
+        const mother = flatData.find(s =>
+          s.isSpouse &&
+          s.spouseOf === node.parent &&
+          s.children &&
+          s.children.some(c => c.id === node.id)
+        );
 
         let sourceX = parentPos.x;
-        if (parentSpouse) {
-          const spousePos = positions.get(parentSpouse.id);
-          if (spousePos) {
-            sourceX = (parentPos.x + spousePos.x) / 2;
+
+        if (mother) {
+          // Link from midpoint between parent and specific mother
+          const motherPos = positions.get(mother.id);
+          if (motherPos) {
+            sourceX = (parentPos.x + motherPos.x) / 2;
+          }
+        } else {
+          // Legacy: try to find any spouse (backward compatibility)
+          const parentSpouse = flatData.find(n => n.spouseOf === node.parent);
+          if (parentSpouse) {
+            const spousePos = positions.get(parentSpouse.id);
+            if (spousePos) {
+              sourceX = (parentPos.x + spousePos.x) / 2;
+            }
           }
         }
 
@@ -288,18 +380,34 @@ function renderLinks(positions) {
     }
   });
 
-  // Spouse links
+  // Spouse links - handle both single and multiple spouses
   flatData.forEach(node => {
-    if (!node.isSpouse && node.spouse) {
+    if (!node.isSpouse) {
       const personPos = positions.get(node.id);
-      const spousePos = positions.get(node.spouse.id);
 
-      if (personPos && spousePos) {
-        links.push({
-          source: { x: personPos.x, y: personPos.y },
-          target: { x: spousePos.x, y: spousePos.y },
-          type: 'spouse'
+      // New format: multiple spouses
+      if (node.spouses && node.spouses.length > 0) {
+        node.spouses.forEach(spouse => {
+          const spousePos = positions.get(spouse.id);
+          if (personPos && spousePos) {
+            links.push({
+              source: { x: personPos.x, y: personPos.y },
+              target: { x: spousePos.x, y: spousePos.y },
+              type: 'spouse'
+            });
+          }
         });
+      }
+      // Legacy format: single spouse
+      else if (node.spouse) {
+        const spousePos = positions.get(node.spouse.id);
+        if (personPos && spousePos) {
+          links.push({
+            source: { x: personPos.x, y: personPos.y },
+            target: { x: spousePos.x, y: spousePos.y },
+            type: 'spouse'
+          });
+        }
       }
     }
   });
@@ -740,12 +848,38 @@ function showPersonInfo(person) {
     notesSection.style.display = 'none';
   }
 
-  // Spouse
+  // Spouse(s) - handle both single and multiple spouses
   const spouseSection = document.getElementById('spouse-section');
   const spouseList = document.getElementById('spouse-list');
   spouseList.innerHTML = '';
 
-  if (person.spouse) {
+  // New format: multiple spouses
+  if (person.spouses && person.spouses.length > 0) {
+    spouseSection.style.display = 'block';
+
+    person.spouses.forEach(spouse => {
+      const li = document.createElement('li');
+      li.textContent = spouse.name;
+
+      // Show children count for this spouse
+      if (spouse.children && spouse.children.length > 0) {
+        const childCount = spouse.children.length;
+        li.textContent += ` (${childCount} ${childCount === 1 ? 'child' : 'children'})`;
+      }
+
+      li.dataset.personId = spouse.id;
+      li.addEventListener('click', () => {
+        const spouseData = flatData.find(n => n.id === spouse.id);
+        if (spouseData) {
+          closePanel();
+          setTimeout(() => showPersonInfo(spouseData), 100);
+        }
+      });
+      spouseList.appendChild(li);
+    });
+  }
+  // Legacy format: single spouse
+  else if (person.spouse) {
     spouseSection.style.display = 'block';
     const li = document.createElement('li');
     li.textContent = person.spouse.name;
@@ -762,12 +896,52 @@ function showPersonInfo(person) {
     spouseSection.style.display = 'none';
   }
 
-  // Children
+  // Children - group by mother if multiple spouses
   const childrenSection = document.getElementById('children-section');
   const childrenList = document.getElementById('children-list');
   childrenList.innerHTML = '';
 
-  if (person.children && person.children.length > 0) {
+  // New format: children grouped under each spouse
+  if (person.spouses && person.spouses.length > 0) {
+    let hasChildren = false;
+
+    person.spouses.forEach((spouse, index) => {
+      if (spouse.children && spouse.children.length > 0) {
+        hasChildren = true;
+
+        // Add subheading for this spouse's children (if multiple spouses)
+        if (person.spouses.length > 1) {
+          const subheading = document.createElement('h4');
+          subheading.textContent = `Children with ${spouse.name}:`;
+          subheading.style.marginTop = index > 0 ? '1rem' : '0';
+          subheading.style.fontSize = '0.9rem';
+          subheading.style.fontWeight = '600';
+          subheading.style.color = 'var(--accent-gold)';
+          subheading.style.fontFamily = 'var(--font-display)';
+          childrenList.appendChild(subheading);
+        }
+
+        // List children
+        spouse.children.forEach(child => {
+          const childData = flatData.find(n => n.id === child.id);
+          if (childData) {
+            const li = document.createElement('li');
+            li.textContent = child.name;
+            li.dataset.personId = child.id;
+            li.addEventListener('click', () => {
+              closePanel();
+              setTimeout(() => showPersonInfo(childData), 100);
+            });
+            childrenList.appendChild(li);
+          }
+        });
+      }
+    });
+
+    childrenSection.style.display = hasChildren ? 'block' : 'none';
+  }
+  // Legacy format: flat children list
+  else if (person.children && person.children.length > 0) {
     childrenSection.style.display = 'block';
     person.children.forEach(child => {
       const childData = flatData.find(n => n.id === child.id);
